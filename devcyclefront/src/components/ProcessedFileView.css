@@ -1,0 +1,84 @@
+.pfv-title {
+  text-align: center;
+  color: #6366f1;
+  margin-bottom: 2rem;
+  font-size: 35px;
+  font-weight: bold;
+}
+
+.pfv-section {
+  margin: 2rem 0;
+}
+
+.pfv-section-title {
+  color: #2563eb;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.pfv-historias-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.pfv-historia-card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 16px #0002;
+  border: 1px solid #e0e7ef;
+  display: flex;
+  flex-direction: column;
+  min-height: 120px;
+}
+
+.pfv-epica {
+  color: #6366f1;
+  font-weight: 700;
+  font-size: 1.15rem;
+  margin-bottom: 0.5rem;
+}
+
+.pfv-historia {
+  color: #334155;
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+.pfv-platform-title {
+  text-align: center;
+  color: #6366f1;
+  margin-bottom: 2rem;
+  font-size: 32px;
+  font-weight: bold;
+}
+
+.pfv-modal-bg {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.pfv-modal {
+  background: #fff;
+  border-radius: 12px;
+  padding: 2rem 2.5rem;
+  box-shadow: 0 4px 24px #0003;
+  text-align: center;
+  min-width: 320px;
+}
+
+.pfv-modal-btn {
+  padding: 0.5rem 2rem;
+  background: #6366f1;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+}
