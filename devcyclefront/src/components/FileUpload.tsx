@@ -1,14 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { useProcessedFile } from "../context/ProcessedFileContext";
 import AppHeader from "./AppHeader";
 import "./FileUpload.css";
 
 const FileUpload: React.FC = () => {
   const [file, setFile] = useState<File | null>(null);
-  const [selectedIA, setSelectedIA] = useState<string>("OpenAI");
+  const [selectedIA, setSelectedIA] = useState<string>("gpt-4");
   const [error, setError] = useState<string>("");
   const [isProcessing, setIsProcessing] = useState<boolean>(false);
   const navigate = useNavigate();
+  const { setResult } = useProcessedFile();
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
       setFile(e.target.files[0]);
@@ -17,10 +20,10 @@ const FileUpload: React.FC = () => {
   };
 
   useEffect(() => {
-    document.title = "Upload File | AI Integration";
+    document.title = "AI Integration";
   }, []);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!file) {
       setError("Please select a file before processing.");
@@ -28,11 +31,32 @@ const FileUpload: React.FC = () => {
     }
     setError("");
     setIsProcessing(true);
+    setResult(null); // Clear previous result
+    localStorage.removeItem("processedFileResult"); // Clear previous result from localStorage
 
-    setTimeout(() => {
+    try {
+      const formData = new FormData();
+      formData.append("file", file);
+      formData.append("model", selectedIA);
+
+      const response = await fetch("https://ai-devcrew-back.onrender.com/process-request", {
+        method: "POST",
+        body: formData,
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to process the document.");
+      }
+
+      const result = await response.json();
+      setResult(result); // <-- Save the file content in context
+
       setIsProcessing(false);
       navigate("/processed");
-    }, 2000);
+    } catch (err: any) {
+      setIsProcessing(false);
+      setError(err.message || "An error occurred while processing the document.");
+    }
   };
 
   return (
@@ -68,9 +92,9 @@ const FileUpload: React.FC = () => {
                 <input
                   type="radio"
                   name="ia"
-                  value="OpenAI"
-                  checked={selectedIA === "OpenAI"}
-                  onChange={() => setSelectedIA("OpenAI")}
+                  value="gpt-4"
+                  checked={selectedIA === "gpt-4"}
+                  onChange={() => setSelectedIA("gpt-4")}
                   disabled={isProcessing}
                 />
                 OpenAI
