@@ -11,7 +11,7 @@ const ProcessedFileView: React.FC = () => {
   const [isCreating, setIsCreating] = useState<boolean>(false);
   const [showSuccess, setShowSuccess] = useState<boolean>(false);
   const navigate = useNavigate();
-
+  console.log("ProcessedFileView result:", result);
   const handleSubmit = async (e: React.FormEvent) => {
       e.preventDefault();
       setIsCreating(true);
@@ -45,21 +45,21 @@ const ProcessedFileView: React.FC = () => {
       <AppHeader subtitle="Here you will see the processed file content." />
       <main className="file-upload-main">
         <form onSubmit={handleSubmit}>
-          <div className="pfv-title">Processed File Content</div>
+          <div className="pfv-title">Processed file content</div>
           <div className="pfv-historia-card">
-            <h2 className="pfv-section-title">Process info</h2>
+            <h2 className="pfv-section-title">Process information</h2>
             <div className="pfv-file-info-row">
-              <span className="pfv-epica">File Name: </span>
-              <span className="pfv-file-name">{result?.analisis?.hitos[0]}</span>
+              <span className="pfv-subtitle">File Name: </span>
+              <span className="pfv-file-name">{result?.analisis?.nombre_archivo}</span>
               <br />
-              <span className="pfv-epica">Model: </span>
+              <span className="pfv-subtitle">Model used: </span>
               <span className="pfv-file-name">{result?.modelo_usado}</span>
             </div>
           </div>
           {historias && Array.isArray(historias) && historias.length > 0 ? (
             <section className="pfv-section">
               <div className="pfv-historia-card">
-                <h2 className="pfv-section-title">User Stories</h2>
+                <h2 className="pfv-section-title">User stories</h2>
                 <div className="pfv-historias-list">
                   {historias.map((historia: any, idx: number) => (
                     <div key={idx} className="pfv-historia-card">
@@ -70,7 +70,7 @@ const ProcessedFileView: React.FC = () => {
                         {historia.description}
                       </span>
                       <br />
-                      <span className="pfv-epica">
+                      <span className="pfv-subtitle">
                         Acceptance criteria:
                       </span>
                       <span className="pfv-historia">

@@ -41,6 +41,13 @@
   margin-bottom: 0.5rem;
 }
 
+.pfv-subtitle {
+  color: #111;
+  font-weight: 500;
+  font-size: 1.15rem;
+  margin-bottom: 0.5rem;
+}
+
 .pfv-historia {
   color: #334155;
   font-size: 1rem;
