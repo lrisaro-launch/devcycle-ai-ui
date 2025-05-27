@@ -6,7 +6,7 @@ import "./ProcessedFileView.css";
 
 const ProcessedFileView: React.FC = () => {
   const { result } = useProcessedFile(); 
-  const historias = result?.historias_de_usuario || result?.analisis?.historias_de_usuario;
+  const historias = result?.analisis?.tickets;
   const [selectedRepo, setSelectedRepo] = useState<string>("Azure");
   const [isCreating, setIsCreating] = useState<boolean>(false);
   const [showSuccess, setShowSuccess] = useState<boolean>(false);
@@ -17,20 +17,23 @@ const ProcessedFileView: React.FC = () => {
       setIsCreating(true);
 
       try {
-        alert("Processing the document with " + selectedRepo + " AI...");
-      // const response = await fetch("https://ai-devcrew-back.onrender.com/process-request", {
-      //   method: "POST",
-      //   body: formData,
-      // });
+        const formData = new FormData();
+        formData.append("additionalProp1", result);
 
-      // if (!response.ok) {
-      //   throw new Error("Failed to process the document.");
-      // }
+        const response = await fetch("https://ai-devcrew-back.onrender.com/publish-to-jira", {
+          method: "POST",
+          body: formData,
+        });
 
-      // const result = await response.json();
+      if (!response.ok) {
+        throw new Error("Failed to process the document.");
+      }
+
+      const resultAPI = await response.json();
+      alert(resultAPI);
 
       setIsCreating(false);
-      setShowSuccess(true);
+      // setShowSuccess(true);
     } catch (err: any) {
       setIsCreating(false);
       alert("An error occurred while processing the document.");
@@ -43,20 +46,39 @@ const ProcessedFileView: React.FC = () => {
       <main className="file-upload-main">
         <form onSubmit={handleSubmit}>
           <div className="pfv-title">Processed File Content</div>
+          <div className="pfv-historia-card">
+            <h2 className="pfv-section-title">Process info</h2>
+            <div className="pfv-file-info-row">
+              <span className="pfv-epica">File Name: </span>
+              <span className="pfv-file-name">{result?.analisis?.hitos[0]}</span>
+              <br />
+              <span className="pfv-epica">Model: </span>
+              <span className="pfv-file-name">{result?.modelo_usado}</span>
+            </div>
+          </div>
           {historias && Array.isArray(historias) && historias.length > 0 ? (
             <section className="pfv-section">
-              <h2 className="pfv-section-title">Historias de Usuario</h2>
-              <div className="pfv-historias-list">
-                {historias.map((historia: any, idx: number) => (
-                  <div key={idx} className="pfv-historia-card">
-                    <span className="pfv-epica">
-                      {idx + 1}. {historia.epica}
-                    </span>
-                    <span className="pfv-historia">
-                      {historia.historia}
-                    </span>
-                  </div>
-                ))}
+              <div className="pfv-historia-card">
+                <h2 className="pfv-section-title">User Stories</h2>
+                <div className="pfv-historias-list">
+                  {historias.map((historia: any, idx: number) => (
+                    <div key={idx} className="pfv-historia-card">
+                      <span className="pfv-epica">
+                        {idx + 1}. {historia.summary}
+                      </span>
+                      <span className="pfv-historia">
+                        {historia.description}
+                      </span>
+                      <br />
+                      <span className="pfv-epica">
+                        Acceptance criteria:
+                      </span>
+                      <span className="pfv-historia">
+                        {historia.criterios_de_aceptacion}
+                      </span>
+                    </div>
+                  ))}
+                </div>
               </div>
               <br /><br />
               <div>
