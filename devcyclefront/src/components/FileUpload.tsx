@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useProcessedFile } from "../context/ProcessedFileContext";
 import AppHeader from "./AppHeader";
 import "./FileUpload.css";
+import AppFooter from "./AppFooter";
 
 const FileUpload: React.FC = () => {
   const [file, setFile] = useState<File | null>(null);
@@ -127,6 +128,7 @@ const FileUpload: React.FC = () => {
           )}
         </form>
       </main>
+      <AppFooter/>
     </div>
   );
 };

@@ -8,7 +8,7 @@ interface AppHeaderProps {
 }
 
 const AppHeader: React.FC<AppHeaderProps> = ({
-  title = "Launch AI Functional Document Processor",
+  title = "Launch DevCycle AI",
 }) => (
   <header className="app-header">
     <div className="header-content">

@@ -1,0 +1,162 @@
+.homepage-bg {
+  min-height: 100vh;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  background: #101522;
+}
+
+.homepage-hero {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 16px 40px 16px;
+  background: radial-gradient(ellipse at center, #1e2746 0%, #101522 100%);
+  position: relative;
+  padding-top: 24px !important;
+}
+
+.homepage-hero-content {
+  text-align: center;
+  max-width: 600px;
+  margin: 0 auto;
+  z-index: 1;
+}
+
+.homepage-hero-icon {
+  font-size: 48px;
+  background: #2d3a5a;
+  border-radius: 50%;
+  width: 72px;
+  height: 72px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 16px auto 16px auto
+}
+
+.homepage-title {
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin-bottom: 18px;
+  line-height: 1.2;
+}
+
+.homepage-desc {
+  font-size: 1.2rem;
+  color: #b0b8d1;
+  margin-bottom: 32px;
+}
+
+.homepage-hero-buttons {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.homepage-btn {
+  padding: 12px 32px;
+  border-radius: 24px;
+  font-size: 1rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background 0.2s, color 0.2s;
+  border: none;
+  cursor: pointer;
+  display: inline-block;
+}
+
+.homepage-btn-primary {
+  background: #3b82f6;
+  color: #fff;
+}
+
+.homepage-btn-primary:hover {
+  background: #2563eb;
+}
+
+.homepage-btn-secondary {
+  background: #232b3e;
+  color: #fff;
+}
+
+.homepage-btn-secondary:hover {
+  background: #374151;
+}
+
+.homepage-areas {
+  background: #181e2e;
+  padding: 56px 16px;
+}
+
+.homepage-areas-title {
+  text-align: center;
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 36px;
+}
+
+.homepage-areas-list {
+  display: flex;
+  gap: 32px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.homepage-area-card {
+  background: #232b3e;
+  border-radius: 18px;
+  padding: 32px 24px;
+  text-align: center;
+  min-width: 220px;
+  max-width: 260px;
+  margin-bottom: 16px;
+  box-shadow: 0 2px 12px 0 rgba(0,0,0,0.08);
+}
+
+.area-icon {
+  font-size: 2.2rem;
+  margin-bottom: 14px;
+  display: block;
+}
+
+.homepage-area-card h3 {
+  font-size: 1.1rem;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.homepage-area-card p {
+  color: #b0b8d1;
+  font-size: 1rem;
+}
+
+.homepage-bg {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.homepage-hero {
+  min-height: 0;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 16px;
+  background: radial-gradient(ellipse at center, #1e2746 0%, #101522 100%);
+  position: relative;
+}
+
+.homepage-logo {
+  width: 200px;
+  height: auto;
+}
+
+@media (min-width: 0px) {
+  .homepage-hero {
+    padding-top: 64px; 
+  }
+}

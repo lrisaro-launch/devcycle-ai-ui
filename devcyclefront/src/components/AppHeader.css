@@ -1,9 +1,8 @@
 .app-header {
   width: 100%;
-  background: linear-gradient(90deg, #f3f2ee 0%, #ffffff 100%);
-  color: #000000;
+  background: rgb(17 17 17/.8)!important;
+  color: azure;
   box-shadow: 0 2px 8px rgba(99,102,241,0.08);
-  position: sticky;
   top: 0;
   left: 0;
   z-index: 10;
