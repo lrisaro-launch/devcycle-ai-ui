@@ -1,10 +1,7 @@
 .app-header {
   width: 100%;
-  padding: 2rem 0 1rem 0;
   background: linear-gradient(90deg, #6366f1 0%, #818cf8 100%);
   color: #fff;
-  text-align: left;
-  margin-bottom: 2rem;
   box-shadow: 0 2px 8px rgba(99,102,241,0.08);
   position: sticky;
   top: 0;
@@ -25,4 +22,14 @@
   margin: 0 0 0 2.5rem;
   font-size: 1.2rem;
   opacity: 0.85;
+}
+
+.app-header .header-content {
+  display: flex;
+  align-items: center;
+}
+
+.header-logo {
+  height: 110px; 
+  margin-right: -40px;
 }

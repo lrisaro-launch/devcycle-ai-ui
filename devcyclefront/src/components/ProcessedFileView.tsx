@@ -41,7 +41,7 @@ const ProcessedFileView: React.FC = () => {
   }
   return (
     <div className="file-upload-bg">
-      <AppHeader subtitle="Here you will see the processed file content." />
+      <AppHeader/>
       <main className="file-upload-main">
         <form onSubmit={handleSubmit}>
           <div className="pfv-title">Processed file content</div>

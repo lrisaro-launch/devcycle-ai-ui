@@ -14,13 +14,11 @@ export const useProcessedFile = () => {
 };
 
 export const ProcessedFileProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-  // Inicializa el estado desde localStorage si existe
   const [result, setResultState] = useState<any>(() => {
     const saved = localStorage.getItem("processedFileResult");
     return saved ? JSON.parse(saved) : null;
   });
 
-  // Cuando el resultado cambia, guárdalo en localStorage
   useEffect(() => {
     if (result) {
       localStorage.setItem("processedFileResult", JSON.stringify(result));
@@ -29,7 +27,6 @@ export const ProcessedFileProvider: React.FC<{ children: ReactNode }> = ({ child
     }
   }, [result]);
 
-  // setResult que también actualiza localStorage
   const setResult = (data: any) => {
     setResultState(data);
   };
