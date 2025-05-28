@@ -69,6 +69,7 @@ const FileUpload: React.FC = () => {
               {error}
             </div>
           )}
+          <section className="file-upload-ia-section">
           <h2>Upload the functional document</h2>
           <label className="file-upload-label">
             Select file
@@ -84,8 +85,9 @@ const FileUpload: React.FC = () => {
               <strong>Selected file:</strong> {file.name}
             </div>
           )}
+          </section>
           <section className="file-upload-ia-section">
-            <h3>Select AI to process the document</h3>
+            <h2>Select AI to process the document</h2>
             <div className="file-upload-ia-options">
               <label>
                 <input
@@ -113,7 +115,6 @@ const FileUpload: React.FC = () => {
           </section>
           <br />
           <button
-            className="file-upload-submit"
             type="submit"
             disabled={isProcessing}
           >

@@ -27,13 +27,13 @@
 
 .file-upload-main h2 {
   margin-bottom: 1.5rem;
-  color: #6366f1;
+  color: #222222;
 }
 
 .file-upload-label {
   display: inline-block;
   padding: 0.75rem 2rem;
-  background: linear-gradient(90deg, #6366f1 0%, #818cf8 100%);
+  background: #1a1a1a;
   color: #fff;
   border-radius: 999px;
   cursor: pointer;
@@ -70,7 +70,7 @@
 
 .file-upload-ia-section h3 {
   margin: 0 0 1rem 0;
-  color: #6366f1;
+  color: #222222;
   font-size: 1.2rem;
   font-weight: 600;
 }
@@ -92,7 +92,7 @@
 }
 
 .file-upload-ia-options input[type="radio"] {
-  accent-color: #6366f1;
+  accent-color: #222222;
   width: 1.1rem;
   height: 1.1rem;
 }
@@ -109,7 +109,7 @@
 
 .file-upload-progress {
   margin-top: 1.5rem;
-  color: #6366f1;
+  color: #222222;
   font-weight: 600;
   font-size: 1.1rem;
   display: flex;
