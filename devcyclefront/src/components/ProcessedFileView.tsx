@@ -11,29 +11,28 @@ const ProcessedFileView: React.FC = () => {
   const [isCreating, setIsCreating] = useState<boolean>(false);
   const [showSuccess, setShowSuccess] = useState<boolean>(false);
   const navigate = useNavigate();
-  console.log("ProcessedFileView result:", result);
+
   const handleSubmit = async (e: React.FormEvent) => {
       e.preventDefault();
       setIsCreating(true);
 
       try {
-        const formData = new FormData();
-        formData.append("additionalProp1", result);
+        if (selectedRepo == "Jira") {        
+          const response = await fetch("https://ai-devcrew-back.onrender.com/publish-to-jira", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json", 
+            },
+            body: JSON.stringify( result ), 
+          });
+          
+          if (!response.ok) {
+            throw new Error("Failed to process the document.");
+          }
+        }
 
-        const response = await fetch("https://ai-devcrew-back.onrender.com/publish-to-jira", {
-          method: "POST",
-          body: formData,
-        });
-
-      if (!response.ok) {
-        throw new Error("Failed to process the document.");
-      }
-
-      const resultAPI = await response.json();
-      alert(resultAPI);
-
-      setIsCreating(false);
-      // setShowSuccess(true);
+        setIsCreating(false);
+        setShowSuccess(true);
     } catch (err: any) {
       setIsCreating(false);
       alert("An error occurred while processing the document.");
@@ -50,7 +49,7 @@ const ProcessedFileView: React.FC = () => {
             <h2 className="pfv-section-title">Process information</h2>
             <div className="pfv-file-info-row">
               <span className="pfv-subtitle">File Name: </span>
-              <span className="pfv-file-name">{result?.analisis?.nombre_archivo}</span>
+              <span className="pfv-file-name">{result?.analisis?.nombre_de_archivo}</span>
               <br />
               <span className="pfv-subtitle">Model used: </span>
               <span className="pfv-file-name">{result?.modelo_usado}</span>

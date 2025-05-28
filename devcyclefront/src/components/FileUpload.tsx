@@ -61,7 +61,6 @@ const FileUpload: React.FC = () => {
 
   return (
     <div className="file-upload-bg">
-      {isProcessing && <div className="file-upload-overlay"></div>}
       <AppHeader />
       <main className="file-upload-main">
         <form onSubmit={handleSubmit}>
