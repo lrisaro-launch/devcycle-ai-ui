@@ -11,7 +11,7 @@ const ProcessedFileView: React.FC = () => {
   const [isCreating, setIsCreating] = useState<boolean>(false);
   const [showSuccess, setShowSuccess] = useState<boolean>(false);
   const navigate = useNavigate();
-
+  console.log("ProcessedFileView result:", result);
   const handleSubmit = async (e: React.FormEvent) => {
       e.preventDefault();
       setIsCreating(true);
@@ -40,19 +40,19 @@ const ProcessedFileView: React.FC = () => {
 
   }
   return (
-    <div className="file-upload-bg">
+    <div className="pfv-bg">
       <AppHeader/>
-      <main className="file-upload-main">
+      <main className="pfv-main">
         <form onSubmit={handleSubmit}>
           <div className="pfv-title">Processed file content</div>
           <div className="pfv-historia-card">
             <h2 className="pfv-section-title">Process information</h2>
             <div className="pfv-file-info-row">
               <span className="pfv-subtitle">File Name: </span>
-              <span className="pfv-file-name">{result?.analisis?.nombre_de_archivo}</span>
+              <span className="pfv-file-name">{result.analisis.nombre_de_archivo}</span>
               <br />
               <span className="pfv-subtitle">Model used: </span>
-              <span className="pfv-file-name">{result?.modelo_usado}</span>
+              <span className="pfv-file-name">{result.modelo_usado}</span>
             </div>
           </div>
           {historias && Array.isArray(historias) && historias.length > 0 ? (

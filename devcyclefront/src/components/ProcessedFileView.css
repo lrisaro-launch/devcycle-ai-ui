@@ -1,6 +1,24 @@
+.pfv-bg {
+  min-height: 100vh;
+  width: 100vw;
+  background: #101522;
+  background: radial-gradient(ellipse at center, #1e2746 0%, #101522 100%);
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+}
+
+.pfv-main {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
 .pfv-title {
   text-align: center;
-  color: #222222;
+  color: #fff;
   margin-bottom: 2rem;
   font-size: 1.5em;
   font-weight: bold;
@@ -56,7 +74,7 @@
 
 .pfv-platform-title {
   text-align: center;
-  color: #222222;
+  color: #fff;
   margin-bottom: 2rem;
   font-size: 32px;
   font-weight: bold;

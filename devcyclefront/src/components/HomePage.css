@@ -69,12 +69,13 @@
 }
 
 .homepage-btn-primary {
-  background: #3b82f6;
+  background: #2563eb ;
   color: #fff;
 }
 
 .homepage-btn-primary:hover {
-  background: #2563eb;
+  background: #3b82f6;
+  color: #fff;
 }
 
 .homepage-btn-secondary {
@@ -84,6 +85,7 @@
 
 .homepage-btn-secondary:hover {
   background: #374151;
+  color: #fff;
 }
 
 .homepage-areas {
