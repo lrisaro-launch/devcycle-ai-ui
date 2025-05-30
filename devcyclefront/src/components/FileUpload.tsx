@@ -20,7 +20,7 @@ const FileUpload: React.FC = () => {
   const [isProcessing, setIsProcessing] = useState<boolean>(false);
   const [step, setStep] = useState<number>(0);
   const navigate = useNavigate();
-  const { setResult, result } = useProcessedFile();
+  const { setResult } = useProcessedFile();
 
   useEffect(() => {
     document.title = "AI Integration";
@@ -50,41 +50,38 @@ const FileUpload: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (false) {
+    if (!file) {
+      setError("Please select a file before processing.");
+      return;
+    }
+
+    setError("");
+    setIsProcessing(true);
+    // setResult(null);
+    // localStorage.removeItem("processedFileResult");
+
+    try {
+      const formData = new FormData();
+      formData.append("file", file);
+      formData.append("model", selectedIA);
+
+      const response = await fetch("https://ai-devcrew-back.onrender.com/process-request", {
+        method: "POST",
+        body: formData,
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to process the document.");
+      }
+
+      const result = await response.json();
+      setResult(result);
+
+      setIsProcessing(false);
       navigate("/processed");
-    } else {
-      if (!file) {
-        setError("Please select a file before processing.");
-        return;
-      }
-      setError("");
-      setIsProcessing(true);
-      setResult(null);
-      localStorage.removeItem("processedFileResult");
-
-      try {
-        const formData = new FormData();
-        formData.append("file", file);
-        formData.append("model", selectedIA);
-
-        const response = await fetch("https://ai-devcrew-back.onrender.com/process-request", {
-          method: "POST",
-          body: formData,
-        });
-
-        if (!response.ok) {
-          throw new Error("Failed to process the document.");
-        }
-
-        const result = await response.json();
-        setResult(result);
-
-        setIsProcessing(false);
-        navigate("/processed");
-      } catch (err: any) {
-        setIsProcessing(false);
-        setError(err.message || "An error occurred while processing the document.");
-      }
+    } catch (err: any) {
+      setIsProcessing(false);
+      setError(err.message || "An error occurred while processing the document.");
     }
   };
 

@@ -16,7 +16,6 @@
   left: 0;
 }
 
-/* Botón de cerrar igual al de abrir, alineado a la izquierda */
 .side-drawer-close {
   background: none;
   border: none;
@@ -51,7 +50,6 @@
   transition: all 0.18s;
 }
 
-/* Si quieres que el botón de abrir también use este estilo, puedes reutilizar la clase: */
 .side-menu-hamburger {
   background: none;
   border: none;
