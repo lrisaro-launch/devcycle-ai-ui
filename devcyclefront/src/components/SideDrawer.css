@@ -40,6 +40,7 @@
 .side-drawer-close:focus {
   background: #232b3e;
 }
+
 .side-drawer-close span {
   display: block;
   width: 26px;
@@ -70,7 +71,7 @@
   width: 26px;
   height: 1px;
   background: #fff;
-  margin: 3px 0;
+  margin: 1.5px 0;
   border-radius: 2px;
   transition: all 0.18s;
 }
