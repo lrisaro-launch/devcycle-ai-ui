@@ -1,35 +1,67 @@
 .app-header {
   width: 100%;
-  background: rgb(17 17 17/.8)!important;
-  color: azure;
+  background: rgba(17, 17, 17, 0.92);
+  color: #fff;
   box-shadow: 0 2px 8px rgba(99,102,241,0.08);
   top: 0;
   left: 0;
   z-index: 10;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  font-family: poppins, sans-serif;
-}
-
-.app-header h1 {
-  margin: 0 0 0 2.5rem;
-  font-size: 2.5rem;
-  letter-spacing: 1px;
-}
-
-.app-header p {
-  margin: 0 0 0 2.5rem;
-  font-size: 1.2rem;
-  opacity: 0.85;
+  align-items: stretch;
+  font-family: 'Poppins', 'Inter', Arial, sans-serif;
+  min-height: 56px;
 }
 
 .app-header .header-content {
   display: flex;
   align-items: center;
+  height: 56px;
+  padding: 0 24px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .header-logo {
-  height: 110px; 
-  margin-right: -40px;
+  height: 50px;
+}
+
+.side-menu-hamburger {
+  background: transparent;
+  margin-right: 15px;
+  border: none;
+  border-radius: 8px;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  cursor: pointer;
+  transition: background 0.18s;
+}
+.side-menu-hamburger:hover {
+  background: rgba(59,130,246,0.08);
+}
+.side-menu-hamburger span {
+  display: block;
+  width: 22px;
+  height: 2px;
+  background: #fff;
+  border-radius: 2px;
+}
+
+.app-header h1, .app-header h2 {
+  margin: 0;
+  font-size: 1.3rem;
+  font-weight: 400;
+  letter-spacing: 0.5px;
+  line-height: 1;
+}
+
+.app-header p {
+  margin: 0;
+  font-size: 1rem;
+  opacity: 0.85;
 }

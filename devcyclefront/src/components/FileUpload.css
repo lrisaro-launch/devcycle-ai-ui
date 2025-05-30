@@ -1,11 +1,15 @@
 .file-upload-bg {
   min-height: 100vh;
   width: 100vw;
-  background: #101522;
-  background: radial-gradient(ellipse at center, #1e2746 0%, #101522 100%);
+  background:
+    url("data:image/svg+xml;utf8,<svg width='40' height='40' viewBox='0 0 40 40' fill='none' xmlns='http://www.w3.org/2000/svg'><rect width='40' height='40' fill='none'/><circle cx='1' cy='1' r='1' fill='%233b82f6' fill-opacity='0.18'/><circle cx='20' cy='20' r='1' fill='%233b82f6' fill-opacity='0.18'/><circle cx='1' cy='20' r='1' fill='%233b82f6' fill-opacity='0.12'/><circle cx='20' cy='1' r='1' fill='%233b82f6' fill-opacity='0.12'/></svg>")
+    repeat,
+    radial-gradient(ellipse at center, #1e2746 0%, #101522 100%);
   color: #fff;
   display: flex;
   flex-direction: column;
+  position: relative;
+  z-index: 1;
 }
 
 .file-upload-main {
@@ -148,54 +152,72 @@ form {
   margin-top: 12px;
 }
 
+/* --- IA Options Modern Style --- */
 .file-upload-ia-logos {
   display: flex;
-  gap: 48px;
   justify-content: center;
-  align-items: center;
-  margin: 32px 0 0 0;
-  height: 100%;
+  gap: 40px;
+  margin: 32px 0 24px 0;
 }
 
 .file-upload-ia-logo-option {
+  background: linear-gradient(135deg, rgba(59,130,246,0.10) 0%, rgba(24,31,54,0.92) 100%);
+  border: 2px solid transparent;
+  border-radius: 18px;
+  padding: 28px 38px 18px 38px;
+  font-size: 1.12rem;
+  color: #fff;
+  cursor: pointer;
   display: flex;
   flex-direction: column;
   align-items: center;
-  cursor: pointer;
-  border: 2px solid transparent;
-  border-radius: 16px;
-  padding: 32px 40px 20px 40px;
-  min-width: 160px;
-  min-height: 180px;
-  transition: border-color 0.2s, background 0.2s;
-  background: #7b8bb7; 
+  gap: 18px;
+  transition: border 0.18s, background 0.18s, box-shadow 0.18s;
+  box-shadow: 0 4px 16px 0 rgba(59,130,246,0.10);
+  position: relative;
+  min-width: 140px;
   outline: none;
-  justify-content: center;
 }
 
 .file-upload-ia-logo-option.selected,
-.file-upload-ia-logo-option:focus {
-  border-color: #3b82f6;
-  background: #e0eaff; 
+.file-upload-ia-logo-option:focus,
+.file-upload-ia-logo-option:hover {
+  border: 2.5px solid #3b82f6;
+  background: linear-gradient(135deg, rgba(59,130,246,0.18) 0%, #232b3e 100%);
+  box-shadow: 0 6px 24px 0 rgba(59,130,246,0.13);
+}
+
+.file-upload-ia-logo-option input[type="radio"] {
+  display: none;
 }
 
 .file-upload-ia-logo-img {
-  width: 96px;
-  height: 96px;
-  margin-bottom: 16px;
-  object-fit: contain;
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
+  width: 64px;
+  height: 64px;
+  margin: 0;
+  margin-bottom: 10px;
+  vertical-align: middle;
+  filter: drop-shadow(0 2px 8px rgba(59,130,246,0.10));
+  transition: transform 0.18s;
+}
+
+.file-upload-ia-logo-option.selected .file-upload-ia-logo-img,
+.file-upload-ia-logo-option:hover .file-upload-ia-logo-img {
+  transform: scale(1.08);
 }
 
 .file-upload-ia-logo-label {
-  color: #232b3e;
-  font-size: 1.1rem;
-  font-weight: 500;
-  text-align: center;
+  display: block;
   margin-top: 2px;
+  font-size: 1.13rem;
+  font-weight: 700;
+  color: #fff;
+  text-align: center;
+  letter-spacing: 0.2px;
+  font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+  text-shadow: 0 2px 8px rgba(59,130,246,0.10);
 }
+/* --- End IA Options Modern Style --- */
 
 .file-upload-ia-options {
   display: flex;
@@ -302,4 +324,32 @@ button:disabled {
   gap: 12px;
   align-items: flex-start;
   box-shadow: 0 2px 8px 0 rgba(0,0,0,0.06);
+}
+
+.file-upload-title-section {
+  width: 100%;
+  max-width: 700px;
+  margin: 0 auto 32px auto;
+  text-align: center;
+  padding-top: 32px;
+}
+
+.file-upload-title {
+  font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+  font-size: 2.6rem;
+  font-weight: 800;
+  letter-spacing: -1px;
+  color: #fff;
+  margin-bottom: 12px;
+  line-height: 1.1;
+}
+
+.file-upload-description {
+  font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+  font-size: 1.18rem;
+  color: #b0b8d1;
+  font-weight: 400;
+  margin: 0 auto;
+  max-width: 540px;
+  line-height: 1.5;
 }

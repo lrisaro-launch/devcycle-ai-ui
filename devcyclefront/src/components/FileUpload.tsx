@@ -50,7 +50,7 @@ const FileUpload: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (result) {
+    if (false) {
       navigate("/processed");
     } else {
       if (!file) {
@@ -93,7 +93,13 @@ const FileUpload: React.FC = () => {
 
   return (
     <div className="file-upload-bg">
-      <AppHeader />
+      <AppHeader/>
+      <div className="file-upload-title-section">
+        <h1 className="file-upload-title">AI Functional Document Processor</h1>
+        <p className="file-upload-description">
+          Upload your functional document, select your preferred AI, and let us generate user stories for you in seconds.
+        </p>
+      </div>
       <br /><br />
       {/* Progress Bar */}
       <div className="file-upload-progress-bar-container">
@@ -138,7 +144,6 @@ const FileUpload: React.FC = () => {
                 }}
               >
                 <div className="file-upload-dropzone-icon">
-                  {/* Puedes usar un SVG o emoji como ícono */}
                   <svg width="48" height="48" fill="none" viewBox="0 0 48 48">
                     <rect width="48" height="48" rx="12" fill="#232b3e"/>
                     <path d="M24 14v16m0 0l-6-6m6 6l6-6" stroke="#3b82f6" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
