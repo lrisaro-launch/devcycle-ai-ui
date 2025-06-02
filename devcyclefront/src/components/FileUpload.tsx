@@ -57,8 +57,8 @@ const FileUpload: React.FC = () => {
 
     setError("");
     setIsProcessing(true);
-    // setResult(null);
-    // localStorage.removeItem("processedFileResult");
+    setResult(null);
+    localStorage.removeItem("processedFileResult");
 
     try {
       const formData = new FormData();
@@ -90,7 +90,7 @@ const FileUpload: React.FC = () => {
 
   return (
     <div className="file-upload-bg">
-      <AppHeader/>
+      <AppHeader />
       <div className="file-upload-title-section">
         <h1 className="file-upload-title">AI Functional Document Processor</h1>
         <p className="file-upload-description">
@@ -142,8 +142,8 @@ const FileUpload: React.FC = () => {
               >
                 <div className="file-upload-dropzone-icon">
                   <svg width="48" height="48" fill="none" viewBox="0 0 48 48">
-                    <rect width="48" height="48" rx="12" fill="#232b3e"/>
-                    <path d="M24 14v16m0 0l-6-6m6 6l6-6" stroke="#3b82f6" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                    <rect width="48" height="48" rx="12" fill="#232b3e" />
+                    <path d="M24 14v16m0 0l-6-6m6 6l6-6" stroke="#3b82f6" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                   </svg>
                 </div>
                 <label className="file-upload-label file-upload-label-drop">
