@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from "react";
-import AppHeader from "../components/AppHeader";
-import AppFooter from "../components/AppFooter";
+import AppHeader from "./AppHeader";
+import AppFooter from "./AppFooter";
 import "./ReviewUserStories.css";
+import Collapsible from "./Collapsible";
 import { useProcessedFile } from "../context/ProcessedFileContext";
+import UserStoryMenuPortal from "./UserStoryMenuPortal";
+import Spinner from "./Spinner";
 
 interface UserStory {
     summary: string;
@@ -19,11 +22,17 @@ const ReviewUserStories: React.FC = () => {
     const [viewStory, setViewStory] = useState<UserStory | null>(null);
     const [deleteStory, setDeleteStory] = useState<UserStory | null>(null);
     const [deleting, setDeleting] = useState(false);
+    const [menuAnchor, setMenuAnchor] = useState<DOMRect | null>(null);
+
+    // States to manage review functionality
+    const [reviewOutput, setReviewOutput] = useState<{ [key: string]: string }>({});
+    const [reviewLoading, setReviewLoading] = useState<{ [key: string]: boolean }>({});
+    const [openCollapsible, setOpenCollapsible] = useState<string | null>(null);
 
     useEffect(() => {
         setStories(result?.analisis?.tickets || []);
         setLoading(false);
-        console.log("User stories loaded:", result.analisis?.tickets);
+
         // const fetchStories = async () => {
         //   try {
         //     setLoading(true);
@@ -40,6 +49,34 @@ const ReviewUserStories: React.FC = () => {
         // };
         // fetchStories();
     }, []);
+
+    const handleReview = async (story: UserStory) => {
+        const key = story.summary;
+        if (reviewOutput[key]) {
+            setOpenCollapsible(key); // Abrir si ya está cargado
+            return;
+        }
+        setReviewLoading(prev => ({ ...prev, [key]: true }));
+        try {
+            //     const response = await fetch(`https://ai-devcrew-back.onrender.com/user-stories/review/${encodeURIComponent(key)}`);
+            //     if (!response.ok) throw new Error("Failed to fetch review output");
+            //     const data = await response.json();
+            //     setReviewOutput(prev => ({ ...prev, [key]: data.output || "No comment." }));
+            // } catch {
+            //     setReviewOutput(prev => ({ ...prev, [key]: "Error loading review output." }));
+            // } finally {
+            //     setReviewLoading(prev => ({ ...prev, [key]: false }));
+            // }
+            setTimeout(() => {
+                setReviewOutput(prev => ({ ...prev, [key]: "No comment." }));
+                setReviewLoading(prev => ({ ...prev, [key]: false }));
+                setOpenCollapsible(key);
+            }, 1000);
+        } catch {
+            setReviewOutput(prev => ({ ...prev, [key]: "Error loading review output." }));
+            setReviewLoading(prev => ({ ...prev, [key]: false }));
+        }
+    };
 
     return (
         <div className="pfv-bg">
@@ -61,33 +98,73 @@ const ReviewUserStories: React.FC = () => {
                         {stories.map((story: UserStory, idx: number) => {
                             const key = story.summary || String(idx);
                             return (
-                                <li className="user-story-item" key={key}>
-                                    <span className="user-story-title">{story.summary}</span>
-                                    <div className="user-story-actions">
-                                        <button
-                                            className="user-story-menu-btn"
-                                            onClick={() => setMenuOpen(menuOpen === key ? null : key)}
-                                            aria-label="Open options"
-                                        >
-                                            <span className="user-story-menu-dot" />
-                                            <span className="user-story-menu-dot" />
-                                            <span className="user-story-menu-dot" />
-                                        </button>
-                                        {menuOpen === key && (
-                                            <div className="user-story-menu-dropdown">
-                                                <button onClick={() => { setViewStory(story); setMenuOpen(null); }}>View</button>
-                                                <button onClick={() => {/* revisar historia */ }}>Review</button>
-                                                <button onClick={() => { setDeleteStory(story); setMenuOpen(null); }}>Delete</button>
+                                <li key={key}>
+                                    <Collapsible
+                                        title={
+                                            <span style={{ display: "flex", alignItems: "center", gap: 10 }}>
+                                                {story.summary}
+                                                {reviewLoading[key] && (
+                                                    <span style={{ marginLeft: 6 }}>
+                                                        <Spinner size={18} />
+                                                    </span>
+                                                )}
+                                            </span>
+                                        }
+                                        open={openCollapsible === key}
+                                        onToggle={() => setOpenCollapsible(openCollapsible === key ? null : key)}
+                                        actions={
+                                            <>
+                                                <button
+                                                    className="user-story-menu-btn"
+                                                    onClick={e => {
+                                                        e.stopPropagation();
+                                                        setMenuOpen(menuOpen === key ? null : key);
+                                                        setMenuAnchor(
+                                                            menuOpen === key
+                                                                ? null
+                                                                : (e.currentTarget as HTMLElement).getBoundingClientRect()
+                                                        );
+                                                    }}
+                                                    aria-label="Open options"
+                                                >
+                                                    <span className="user-story-menu-dot" />
+                                                    <span className="user-story-menu-dot" />
+                                                    <span className="user-story-menu-dot" />
+                                                </button>
+                                                {menuOpen === key && menuAnchor && (
+                                                    <UserStoryMenuPortal
+                                                        anchorRect={menuAnchor}
+                                                        onClose={() => setMenuOpen(null)}
+                                                    >
+                                                        <button onClick={() => { setViewStory(story); setMenuOpen(null); }}>View</button>
+                                                        <button onClick={async () => { setMenuOpen(null); await handleReview(story); }}>Review</button>
+                                                        <button onClick={() => { setDeleteStory(story); setMenuOpen(null); }}>Delete</button>
+                                                    </UserStoryMenuPortal>
+                                                )}
+                                            </>
+                                        }
+                                    >
+                                        {reviewLoading[key] ? (
+                                            <div style={{ display: "flex", alignItems: "center", gap: 10, minHeight: 40 }}>
+                                                <Spinner size={22} />
+                                                <span style={{ color: "#b0b8d1" }}>Reviewing user story...</span>
+                                            </div>
+                                        ) : (
+                                            <div className="user-story-review-comment">
+                                                <b>Review comment:</b>
+                                                <div style={{ marginTop: 6 }}>
+                                                    {reviewOutput[key] ?? "No comment."}
+                                                </div>
                                             </div>
                                         )}
-                                    </div>
+                                    </Collapsible>
                                 </li>
                             );
                         })}
                     </ul>
                 </div>
             </main>
-            {/* Modal to view a US */}
+
             {viewStory && (
                 <div className="review-modal-bg">
                     <div className="review-modal">
@@ -115,7 +192,7 @@ const ReviewUserStories: React.FC = () => {
                     </div>
                 </div>
             )}
-            {/* Modal to delete a US */}
+
             {deleteStory && (
                 <div className="review-modal-bg">
                     <div className="review-modal">

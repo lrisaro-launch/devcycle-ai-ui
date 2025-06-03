@@ -11,7 +11,7 @@
   border-radius: 28px;
   box-shadow: 0 2px 24px 0 rgba(0,0,0,0.13);
   padding: 40px 32px 32px 32px;
-  width: 900px;
+  width: 70%;
   max-width: 98vw;
   margin: 0 auto;
   display: flex;
@@ -25,31 +25,58 @@
   margin: 0;
 }
 
-.user-story-item {
+.user-story-collapsable {
+  margin-bottom: 18px;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px 0 rgba(59,130,246,0.08);
+}
+
+.user-story-collapsable-title {
+  background: linear-gradient(90deg, #181f36 60%, #232b3e 100%);
+  color: #fff;
+  font-weight: 600;
+  font-size: 1.13rem;
+  font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background: linear-gradient(135deg, rgba(59,130,246,0.10) 0%, rgba(24,31,54,0.92) 100%);
-  border-radius: 16px;
   padding: 18px 28px;
-  margin-bottom: 16px;
-  font-size: 1.13rem;
-  color: #fff;
-  box-shadow: 0 2px 8px 0 rgba(59,130,246,0.08);
+  cursor: pointer;
+  transition: background 0.18s;
   position: relative;
+  min-height: 56px;
+  gap: 12px;
+}
+.user-story-collapsable-title.open {
+  background: linear-gradient(90deg, #232b3e 60%, #181f36 100%);
 }
 
-.user-story-title {
-  font-weight: 600;
-  font-size: 1.13rem;
+.user-story-collapsable-arrow {
+  margin-right: 12px;
+  font-size: 1.2em;
+  transition: transform 0.18s;
+  color: #b0b8d1;
+}
+
+.user-story-collapsable-content {
+  background: #232b3e;
   color: #fff;
-  font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+  padding: 22px 32px 18px 32px;
+  font-size: 1.08rem;
+  animation: fadeIn 0.18s;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-8px);}
+  to { opacity: 1; transform: translateY(0);}
 }
 
 .user-story-actions {
-  position: relative;
+  margin-left: auto;
   display: flex;
   align-items: center;
+  position: relative;
 }
 
 .user-story-menu-btn {
@@ -81,13 +108,13 @@
   position: absolute;
   top: 36px;
   right: 0;
+  z-index: 1002;
   background: #232b3e;
   border-radius: 12px;
   box-shadow: 0 4px 16px 0 rgba(59,130,246,0.13);
   display: flex;
   flex-direction: column;
-  min-width: 120px;
-  z-index: 10;
+  width: 140px;
   padding: 8px 0;
 }
 
@@ -107,6 +134,16 @@
   color: #fff;
 }
 
+.user-story-review-comment {
+  margin-top: 8px;
+  background: rgba(30,41,59,0.13);
+  border-radius: 8px;
+  padding: 14px 18px;
+  color: #fff;
+  font-size: 1.04rem;
+  font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+}
+
 .user-stories-loading,
 .user-stories-error,
 .user-stories-empty {
@@ -116,7 +153,6 @@
   margin: 32px 0;
 }
 
-/* Modal fondo */
 .review-modal-bg {
   position: fixed;
   top: 0; left: 0; right: 0; bottom: 0;
@@ -188,6 +224,13 @@
   box-shadow: 0 4px 16px 0 rgba(59,130,246,0.13);
 }
 
+.review-modal-btn[style*="#ef4444"] {
+  background: #ef4444 !important;
+}
+.review-modal-btn[style*="#ef4444"]:hover {
+  background: #dc2626 !important;
+}
+
 .review-modal-acceptance {
   margin: 1.2rem 0 1.5rem 0;
   text-align: left;
@@ -210,11 +253,4 @@
 .review-modal-acceptance-list li {
   margin-bottom: 0.3rem;
   line-height: 1.5;
-}
-
-.review-modal-btn[style*="#ef4444"] {
-  background: #ef4444 !important;
-}
-.review-modal-btn[style*="#ef4444"]:hover {
-  background: #dc2626 !important;
 }
