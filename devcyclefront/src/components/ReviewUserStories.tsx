@@ -9,7 +9,7 @@ import Spinner from "./Spinner";
 interface UserStory {
     id: string;
     key: string;
-    project: "Mi proyecto de scrum";
+    project: string;
     summary: string;
     description: string;
     criterios_de_aceptacion: string[];
@@ -26,7 +26,16 @@ const ReviewUserStories: React.FC = () => {
     const [menuAnchor, setMenuAnchor] = useState<DOMRect | null>(null);
 
     // States to manage review functionality
-    const [reviewOutput, setReviewOutput] = useState<{ [key: string]: string }>({});
+    const [reviewOutput, setReviewOutput] = useState<{
+        [key: string]: {
+            validation?: string;
+            issues?: string[];
+            suggestions?: string[];
+            acceptance_criteria_check?: string;
+            qa_testability?: string;
+            error?: string;
+        }
+    }>({});
     const [reviewLoading, setReviewLoading] = useState<{ [key: string]: boolean }>({});
     const [openCollapsible, setOpenCollapsible] = useState<string | null>(null);
     const [openProject, setOpenProject] = useState<string | null>(null);
@@ -47,6 +56,7 @@ const ReviewUserStories: React.FC = () => {
                 if (!response.ok) throw new Error("Failed to fetch user stories");
                 const data = await response.json();
 
+                // Delete this line when using real data
                 const storiesWithProject = (data || []).map((story: any) => ({
                     ...story,
                     project: "Mi proyecto de scrum"
@@ -70,21 +80,33 @@ const ReviewUserStories: React.FC = () => {
         }
         setReviewLoading(prev => ({ ...prev, [key]: true }));
         try {
+            const payload = {
+                ids: [key],
+                model: "gpt-4"
+            };
             const response = await fetch("https://ai-devcrew-back.onrender.com/validate-jira-stories", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify(story),
+                body: JSON.stringify(payload),
             });
 
             if (!response.ok) throw new Error("Failed to fetch review output");
             const data = await response.json();
-            console.log("Review output:", data);
-            // setReviewOutput(prev => ({ ...prev, [key]: data.output || "No comment." }));
-            // setOpenCollapsible(key);
+            setReviewOutput(prev => ({
+                ...prev,
+                [key]: {
+                    validation: data[0].validation,
+                    issues: data[0].issues,
+                    suggestions: data[0].suggestions,
+                    acceptance_criteria_check: data[0].acceptance_criteria_check,
+                    qa_testability: data[0].qa_testability
+                }
+            }));
+            setOpenCollapsible(key);
         } catch {
-            setReviewOutput(prev => ({ ...prev, [key]: "Error loading review output." }));
+            alert("Error loading review output.");
         } finally {
             setReviewLoading(prev => ({ ...prev, [key]: false }));
         }
@@ -171,14 +193,41 @@ const ReviewUserStories: React.FC = () => {
                                                         {reviewLoading[key] ? (
                                                             <div style={{ display: "flex", alignItems: "center", gap: 10, minHeight: 40 }}>
                                                                 <Spinner size={22} />
-                                                                <span style={{ color: "#b0b8d1" }}>Reviewing user story...</span>
+                                                                <span style={{ color: "black" }}>Reviewing user story...</span>
                                                             </div>
                                                         ) : (
                                                             <div className="user-story-review-comment">
-                                                                <b>Review comment:</b>
-                                                                <div style={{ marginTop: 6 }}>
-                                                                    {reviewOutput[key] ?? "No comment."}
-                                                                </div>
+                                                                <b>Review results:</b>
+                                                                {!reviewOutput[key] && (
+                                                                    <div style={{ marginTop: 6, color: "black" }}>No review results yet.</div>
+                                                                )}
+                                                                {reviewOutput[key] && (
+                                                                    <>
+                                                                        <div style={{ marginTop: 6 }}>
+                                                                            {reviewOutput[key]?.validation ?? "No validation result."}
+                                                                        </div>
+                                                                        <b style={{ display: "block", marginTop: 12 }}>Issues:</b>
+                                                                        <ul style={{ marginTop: 4, paddingLeft: 18 }}>
+                                                                            {Array.isArray(reviewOutput[key]?.issues) && reviewOutput[key].issues.length > 0 ? (
+                                                                                reviewOutput[key].issues.map((issue: string, idx: number) => (
+                                                                                    <li key={idx}>{issue}</li>
+                                                                                ))
+                                                                            ) : (
+                                                                                <li>No issues.</li>
+                                                                            )}
+                                                                        </ul>
+                                                                        <b style={{ display: "block", marginTop: 12 }}>Suggestions:</b>
+                                                                        <ul style={{ marginTop: 4, paddingLeft: 18 }}>
+                                                                            {Array.isArray(reviewOutput[key]?.suggestions) && reviewOutput[key].suggestions.length > 0 ? (
+                                                                                reviewOutput[key].suggestions.map((s: string, idx: number) => (
+                                                                                    <li key={idx}>{s}</li>
+                                                                                ))
+                                                                            ) : (
+                                                                                <li>No suggestions.</li>
+                                                                            )}
+                                                                        </ul>
+                                                                    </>
+                                                                )}
                                                             </div>
                                                         )}
                                                     </Collapsible>
