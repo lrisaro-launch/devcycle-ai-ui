@@ -80,7 +80,7 @@ const ReviewUserStories: React.FC = () => {
 
             if (!response.ok) throw new Error("Failed to fetch review output");
             const data = await response.json();
-
+            console.log("Review output:", data);
             // setReviewOutput(prev => ({ ...prev, [key]: data.output || "No comment." }));
             // setOpenCollapsible(key);
         } catch {
