@@ -4,12 +4,17 @@
   background:
     url("data:image/svg+xml;utf8,<svg width='40' height='40' viewBox='0 0 40 40' fill='none' xmlns='http://www.w3.org/2000/svg'><rect width='40' height='40' fill='none'/><circle cx='1' cy='1' r='1' fill='%233b82f6' fill-opacity='0.18'/><circle cx='20' cy='20' r='1' fill='%233b82f6' fill-opacity='0.18'/><circle cx='1' cy='20' r='1' fill='%233b82f6' fill-opacity='0.12'/><circle cx='20' cy='1' r='1' fill='%233b82f6' fill-opacity='0.12'/></svg>")
     repeat,
-    radial-gradient(ellipse at center, #1e2746 0%, #101522 100%);
-  color: #fff;
+    radial-gradient(ellipse at center, var(--pfv-bg-gradient1, #1e2746) 0%, var(--pfv-bg-gradient2, #101522) 100%);
+  color: var(--text-main);
   display: flex;
   flex-direction: column;
   position: relative;
   z-index: 1;
+}
+
+body[data-theme="light"] .pfv-bg {
+  --pfv-bg-gradient1: #e0e7ef;
+  --pfv-bg-gradient2: #f8fafc;
 }
 
 .pfv-title-section {
@@ -25,7 +30,7 @@
   font-size: 2.6rem;
   font-weight: 800;
   letter-spacing: -1px;
-  color: #fff;
+  color: var(--text-main);
   margin-bottom: 12px;
   line-height: 1.1;
 }
@@ -33,7 +38,7 @@
 .pfv-description {
   font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
   font-size: 1.18rem;
-  color: #b0b8d1;
+  color: var(--text-secondary);
   font-weight: 400;
   margin: 0 auto;
   max-width: 540px;
@@ -50,7 +55,7 @@
 }
 
 .pfv-content-card-large {
-  background: #101522f2;
+  background: var(--bg-card);
   border-radius: 28px;
   box-shadow: 0 2px 24px 0 rgba(0,0,0,0.13);
   padding: 48px 40px 40px 40px;
@@ -78,7 +83,6 @@
   width: 100%;
   min-height: 380px;
   margin: 0 12px;
-  /* Modern glassmorphism style */
   background: linear-gradient(135deg, rgba(59,130,246,0.10) 0%, rgba(24,31,54,0.92) 100%);
   border-radius: 22px;
   box-shadow: 0 8px 32px 0 rgba(31, 41, 55, 0.18), 0 1.5px 8px 0 rgba(59,130,246,0.10);
@@ -91,8 +95,8 @@
   flex-direction: column;
   justify-content: flex-start;
   font-size: 1.13rem;
-  /* Subtle inner shadow for depth */
   box-shadow: 0 8px 32px 0 rgba(31, 41, 55, 0.18), 0 1.5px 8px 0 rgba(59,130,246,0.10), inset 0 1px 8px 0 rgba(59,130,246,0.08);
+  color: var(--text-main);
 }
 
 .pfv-carousel-arrow {
@@ -128,7 +132,7 @@
 }
 
 .pfv-historia-card-full .pfv-epica {
-  color: #fff;
+  color: var(--text-main);
   font-weight: 700;
   font-size: 1.25rem;
   margin-bottom: 1.2rem;
@@ -137,7 +141,7 @@
 }
 
 .pfv-historia-card-full .pfv-historia {
-  color: #e3e8f7;
+  color: var(--text-secondary);
   font-size: 1.13rem;
   line-height: 1.7;
   font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
@@ -154,7 +158,7 @@
 }
 
 .pfv-user-stories-title {
-  color: #fff;
+  color: var(--text-main);
   font-size: 2rem;
   font-weight: 700;
   font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
@@ -170,7 +174,7 @@
 }
 
 .pfv-platform-title {
-  color: #fff;
+  color: var(--text-main);
   font-size: 2rem;
   font-weight: 700;
   font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
@@ -192,7 +196,7 @@
   border-radius: 14px;
   padding: 24px 36px 18px 36px;
   font-size: 1.1rem;
-  color: #fff;
+  color: var(--text-main);
   cursor: pointer;
   display: flex;
   flex-direction: column;
@@ -239,7 +243,7 @@
   margin-top: 2px;
   font-size: 1.13rem;
   font-weight: 700;
-  color: #fff;
+  color: var(--text-main);
   text-align: center;
   letter-spacing: 0.2px;
   font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
@@ -256,7 +260,7 @@
   align-items: center;
   justify-content: center;
   margin-top: 18px;
-  color: #b0b8d1;
+  color: var(--text-secondary);
   font-size: 1.08rem;
   width: 100%;
   text-align: center;
@@ -362,4 +366,35 @@
   transition: background 0.18s, box-shadow 0.18s;
   box-shadow: 0 2px 8px 0 rgba(59,130,246,0.10);
   margin-top: 0.5rem;
+}
+
+/* Light theme overrides */
+body[data-theme="light"] .pfv-content-card-large {
+  background: #f8fafc;
+}
+
+body[data-theme="light"] .pfv-historia-card-full {
+  background: linear-gradient(135deg, #e0e7ef 0%, #f8fafc 100%);
+  color: var(--text-main);
+}
+
+body[data-theme="light"] .pfv-platform-option {
+  background: linear-gradient(135deg, #e0e7ef 0%, #f8fafc 100%);
+  color: var(--text-main);
+}
+
+body[data-theme="light"] .pfv-platform-label {
+  color: var(--text-main);
+}
+
+body[data-theme="light"] .pfv-title,
+body[data-theme="light"] .pfv-user-stories-title,
+body[data-theme="light"] .pfv-platform-title {
+  color: var(--text-main);
+}
+
+body[data-theme="light"] .pfv-description,
+body[data-theme="light"] .pfv-historia-card-full .pfv-historia,
+body[data-theme="light"] .pfv-progress {
+  color: var(--text-secondary);
 }

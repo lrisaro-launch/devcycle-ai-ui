@@ -7,7 +7,7 @@
 }
 
 .user-stories-list-card {
-  background: #101522f2;
+  background: var(--bg-card);
   border-radius: 28px;
   box-shadow: 0 2px 24px 0 rgba(0,0,0,0.13);
   padding: 40px 32px 32px 32px;
@@ -33,8 +33,8 @@
 }
 
 .user-story-collapsable-title {
-  background: linear-gradient(90deg, #181f36 60%, #232b3e 100%);
-  color: #fff;
+  background: #232b3e;
+  color: var(--text-main);
   font-weight: 600;
   font-size: 1.13rem;
   font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
@@ -47,9 +47,6 @@
   min-height: 56px;
   gap: 12px;
 }
-.user-story-collapsable-title.open {
-  background: linear-gradient(90deg, #232b3e 60%, #181f36 100%);
-}
 
 .user-story-collapsable-arrow {
   margin-right: 12px;
@@ -60,7 +57,7 @@
 
 .user-story-collapsable-content {
   background: #232b3e;
-  color: #fff;
+  color: var(--text-main);
   padding: 22px 32px 18px 32px;
   font-size: 1.08rem;
   animation: fadeIn 0.18s;
@@ -120,7 +117,7 @@
 .user-story-menu-dropdown button {
   background: none;
   border: none;
-  color: #fff;
+  color: var(--text-main);
   font-size: 1rem;
   text-align: left;
   padding: 10px 18px;
@@ -138,7 +135,7 @@
   background: rgba(30,41,59,0.13);
   border-radius: 8px;
   padding: 14px 18px;
-  color: #fff;
+  color: var(--text-main);
   font-size: 1.04rem;
   font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
 }
@@ -146,7 +143,7 @@
 .user-stories-loading,
 .user-stories-error,
 .user-stories-empty {
-  color: #b0b8d1;
+  color: var(--text-secondary);
   font-size: 1.1rem;
   text-align: center;
   margin: 32px 0;
@@ -252,4 +249,56 @@
 .review-modal-acceptance-list li {
   margin-bottom: 0.3rem;
   line-height: 1.5;
+}
+
+/* Light theme overrides */
+body[data-theme="light"] .user-stories-list-card {
+  background: #f8fafc;
+}
+
+body[data-theme="light"] .user-story-collapsable-title {
+  background: #e0e7ef;
+  color: var(--text-main);
+}
+
+
+body[data-theme="light"] .user-story-collapsable-content {
+  background: #f8fafc;
+  color: var(--text-main);
+}
+
+body[data-theme="light"] .user-story-menu-dropdown {
+  background: #f8fafc;
+  color: var(--text-main);
+}
+
+body[data-theme="light"] .user-story-review-comment {
+  background: rgba(224,231,239,0.13);
+  color: var(--text-main);
+}
+
+body[data-theme="light"] .user-stories-loading,
+body[data-theme="light"] .user-stories-error,
+body[data-theme="light"] .user-stories-empty {
+  color: var(--text-secondary);
+}
+
+body[data-theme="light"] .review-modal {
+  background: linear-gradient(135deg, #f8fafc 60%, #e0e7ef 100%);
+}
+
+body[data-theme="light"] .review-modal-title {
+  color: #213547;
+}
+
+body[data-theme="light"] .review-modal-description {
+  color: #334155;
+}
+
+body[data-theme="light"] .review-modal-acceptance-title {
+  color: #213547;
+}
+
+body[data-theme="light"] .review-modal-acceptance-list {
+  color: #334155;
 }
