@@ -40,7 +40,6 @@
   font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
   display: flex;
   align-items: center;
-  justify-content: space-between;
   padding: 18px 28px;
   cursor: pointer;
   transition: background 0.18s;

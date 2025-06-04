@@ -32,7 +32,7 @@ const Collapsible: React.FC<CollapsibleProps> = ({
         >
           ▶
         </span>
-        <span className="user-story-title">{title}</span>
+        <span>{title}</span>
         {actions && (
           <div
             className="user-story-actions"

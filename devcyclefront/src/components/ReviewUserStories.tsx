@@ -3,18 +3,19 @@ import AppHeader from "./AppHeader";
 import AppFooter from "./AppFooter";
 import "./ReviewUserStories.css";
 import Collapsible from "./Collapsible";
-import { useProcessedFile } from "../context/ProcessedFileContext";
 import UserStoryMenuPortal from "./UserStoryMenuPortal";
 import Spinner from "./Spinner";
 
 interface UserStory {
+    id: string;
+    key: string;
+    project: "Mi proyecto de scrum";
     summary: string;
     description: string;
     criterios_de_aceptacion: string[];
 }
 
 const ReviewUserStories: React.FC = () => {
-    const { result } = useProcessedFile();
     const [stories, setStories] = useState<UserStory[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
@@ -28,52 +29,63 @@ const ReviewUserStories: React.FC = () => {
     const [reviewOutput, setReviewOutput] = useState<{ [key: string]: string }>({});
     const [reviewLoading, setReviewLoading] = useState<{ [key: string]: boolean }>({});
     const [openCollapsible, setOpenCollapsible] = useState<string | null>(null);
+    const [openProject, setOpenProject] = useState<string | null>(null);
+
+    const storiesByProject = stories.reduce((acc, story) => {
+        if (!acc[story.project]) acc[story.project] = [];
+        acc[story.project].push(story);
+        return acc;
+    }, {} as { [project: string]: UserStory[] });
 
     useEffect(() => {
-        setStories(result?.analisis?.tickets || []);
         setLoading(false);
+        const fetchStories = async () => {
+            try {
+                setLoading(true);
+                setError(null);
+                const response = await fetch("https://ai-devcrew-back.onrender.com/get-all-stories?board_name=Mi%20proyecto%20de%20scrum");
+                if (!response.ok) throw new Error("Failed to fetch user stories");
+                const data = await response.json();
 
-        // const fetchStories = async () => {
-        //   try {
-        //     setLoading(true);
-        //     setError(null);
-        //     const response = await fetch("https://ai-devcrew-back.onrender.com/user-stories");
-        //     if (!response.ok) throw new Error("Failed to fetch user stories");
-        //     const data = await response.json();
-        //     setStories(data);
-        //   } catch (err: any) {
-        //     setError(err.message || "Error loading user stories");
-        //   } finally {
-        //     setLoading(false);
-        //   }
-        // };
-        // fetchStories();
+                const storiesWithProject = (data || []).map((story: any) => ({
+                    ...story,
+                    project: "Mi proyecto de scrum"
+                }));
+
+                setStories(storiesWithProject || []);
+            } catch (err: any) {
+                setError(err.message || "Error loading user stories");
+            } finally {
+                setLoading(false);
+            }
+        };
+        fetchStories();
     }, []);
 
     const handleReview = async (story: UserStory) => {
-        const key = story.summary;
+        const key = story.id;
         if (reviewOutput[key]) {
-            setOpenCollapsible(key); // Abrir si ya está cargado
+            setOpenCollapsible(key);
             return;
         }
         setReviewLoading(prev => ({ ...prev, [key]: true }));
         try {
-            //     const response = await fetch(`https://ai-devcrew-back.onrender.com/user-stories/review/${encodeURIComponent(key)}`);
-            //     if (!response.ok) throw new Error("Failed to fetch review output");
-            //     const data = await response.json();
-            //     setReviewOutput(prev => ({ ...prev, [key]: data.output || "No comment." }));
-            // } catch {
-            //     setReviewOutput(prev => ({ ...prev, [key]: "Error loading review output." }));
-            // } finally {
-            //     setReviewLoading(prev => ({ ...prev, [key]: false }));
-            // }
-            setTimeout(() => {
-                setReviewOutput(prev => ({ ...prev, [key]: "No comment." }));
-                setReviewLoading(prev => ({ ...prev, [key]: false }));
-                setOpenCollapsible(key);
-            }, 1000);
+            const response = await fetch("https://ai-devcrew-back.onrender.com/validate-jira-stories", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(story),
+            });
+
+            if (!response.ok) throw new Error("Failed to fetch review output");
+            const data = await response.json();
+
+            // setReviewOutput(prev => ({ ...prev, [key]: data.output || "No comment." }));
+            // setOpenCollapsible(key);
         } catch {
             setReviewOutput(prev => ({ ...prev, [key]: "Error loading review output." }));
+        } finally {
             setReviewLoading(prev => ({ ...prev, [key]: false }));
         }
     };
@@ -84,7 +96,7 @@ const ReviewUserStories: React.FC = () => {
             <div className="pfv-title-section">
                 <h1 className="pfv-title">Review user stories</h1>
                 <p className="pfv-description">
-                    Here you can view and manage all your created user stories. Click the menu on the right of each story for more options.
+                    Here you can view and manage all your created user stories, grouped by project. Click the project name to expand its stories, and use the menu on the right of each story for more options.
                 </p>
             </div>
             <main className="user-stories-main">
@@ -95,72 +107,88 @@ const ReviewUserStories: React.FC = () => {
                         <div className="user-stories-empty">No user stories found.</div>
                     )}
                     <ul className="user-stories-list">
-                        {stories.map((story: UserStory, idx: number) => {
-                            const key = story.summary || String(idx);
-                            return (
-                                <li key={key}>
-                                    <Collapsible
-                                        title={
-                                            <span style={{ display: "flex", alignItems: "center", gap: 10 }}>
-                                                {story.summary}
-                                                {reviewLoading[key] && (
-                                                    <span style={{ marginLeft: 6 }}>
-                                                        <Spinner size={18} />
-                                                    </span>
-                                                )}
-                                            </span>
-                                        }
-                                        open={openCollapsible === key}
-                                        onToggle={() => setOpenCollapsible(openCollapsible === key ? null : key)}
-                                        actions={
-                                            <>
-                                                <button
-                                                    className="user-story-menu-btn"
-                                                    onClick={e => {
-                                                        e.stopPropagation();
-                                                        setMenuOpen(menuOpen === key ? null : key);
-                                                        setMenuAnchor(
-                                                            menuOpen === key
-                                                                ? null
-                                                                : (e.currentTarget as HTMLElement).getBoundingClientRect()
-                                                        );
-                                                    }}
-                                                    aria-label="Open options"
-                                                >
-                                                    <span className="user-story-menu-dot" />
-                                                    <span className="user-story-menu-dot" />
-                                                    <span className="user-story-menu-dot" />
-                                                </button>
-                                                {menuOpen === key && menuAnchor && (
-                                                    <UserStoryMenuPortal
-                                                        anchorRect={menuAnchor}
-                                                        onClose={() => setMenuOpen(null)}
+                        {Object.entries(storiesByProject).map(([project, projectStories]) => (
+                            <li key={project}>
+                                <Collapsible
+                                    title={
+                                        <span style={{ display: "flex", alignItems: "center", gap: 10 }}>
+                                            {project}
+                                        </span>
+                                    }
+                                    open={openProject === project}
+                                    onToggle={() => setOpenProject(openProject === project ? null : project)}
+                                >
+                                    <ul className="user-stories-list" style={{ marginTop: 8 }}>
+                                        {projectStories.map((story, idx) => {
+                                            const key = story.id || String(idx);
+                                            return (
+                                                <li key={key}>
+                                                    <Collapsible
+                                                        title={
+                                                            <span style={{ display: "flex", alignItems: "center", gap: 10 }}>
+                                                                {story.summary}
+                                                                {reviewLoading[key] && (
+                                                                    <span style={{ marginLeft: 6 }}>
+                                                                        <Spinner size={18} />
+                                                                    </span>
+                                                                )}
+                                                            </span>
+                                                        }
+                                                        open={openCollapsible === key}
+                                                        onToggle={() => setOpenCollapsible(openCollapsible === key ? null : key)}
+                                                        actions={
+                                                            <>
+                                                                <button
+                                                                    className="user-story-menu-btn"
+                                                                    onClick={e => {
+                                                                        e.stopPropagation();
+                                                                        setMenuOpen(menuOpen === key ? null : key);
+                                                                        setMenuAnchor(
+                                                                            menuOpen === key
+                                                                                ? null
+                                                                                : (e.currentTarget as HTMLElement).getBoundingClientRect()
+                                                                        );
+                                                                    }}
+                                                                    aria-label="Open options"
+                                                                >
+                                                                    <span className="user-story-menu-dot" />
+                                                                    <span className="user-story-menu-dot" />
+                                                                    <span className="user-story-menu-dot" />
+                                                                </button>
+                                                                {menuOpen === key && menuAnchor && (
+                                                                    <UserStoryMenuPortal
+                                                                        anchorRect={menuAnchor}
+                                                                        onClose={() => setMenuOpen(null)}
+                                                                    >
+                                                                        <button onClick={() => { setViewStory(story); setMenuOpen(null); }}>View</button>
+                                                                        <button onClick={async () => { setMenuOpen(null); await handleReview(story); }}>Review</button>
+                                                                        <button onClick={() => { setDeleteStory(story); setMenuOpen(null); }}>Delete</button>
+                                                                    </UserStoryMenuPortal>
+                                                                )}
+                                                            </>
+                                                        }
                                                     >
-                                                        <button onClick={() => { setViewStory(story); setMenuOpen(null); }}>View</button>
-                                                        <button onClick={async () => { setMenuOpen(null); await handleReview(story); }}>Review</button>
-                                                        <button onClick={() => { setDeleteStory(story); setMenuOpen(null); }}>Delete</button>
-                                                    </UserStoryMenuPortal>
-                                                )}
-                                            </>
-                                        }
-                                    >
-                                        {reviewLoading[key] ? (
-                                            <div style={{ display: "flex", alignItems: "center", gap: 10, minHeight: 40 }}>
-                                                <Spinner size={22} />
-                                                <span style={{ color: "#b0b8d1" }}>Reviewing user story...</span>
-                                            </div>
-                                        ) : (
-                                            <div className="user-story-review-comment">
-                                                <b>Review comment:</b>
-                                                <div style={{ marginTop: 6 }}>
-                                                    {reviewOutput[key] ?? "No comment."}
-                                                </div>
-                                            </div>
-                                        )}
-                                    </Collapsible>
-                                </li>
-                            );
-                        })}
+                                                        {reviewLoading[key] ? (
+                                                            <div style={{ display: "flex", alignItems: "center", gap: 10, minHeight: 40 }}>
+                                                                <Spinner size={22} />
+                                                                <span style={{ color: "#b0b8d1" }}>Reviewing user story...</span>
+                                                            </div>
+                                                        ) : (
+                                                            <div className="user-story-review-comment">
+                                                                <b>Review comment:</b>
+                                                                <div style={{ marginTop: 6 }}>
+                                                                    {reviewOutput[key] ?? "No comment."}
+                                                                </div>
+                                                            </div>
+                                                        )}
+                                                    </Collapsible>
+                                                </li>
+                                            );
+                                        })}
+                                    </ul>
+                                </Collapsible>
+                            </li>
+                        ))}
                     </ul>
                 </div>
             </main>
@@ -210,10 +238,10 @@ const ReviewUserStories: React.FC = () => {
                                 onClick={async () => {
                                     setDeleting(true);
                                     try {
-                                        await fetch(`https://ai-devcrew-back.onrender.com/user-stories/${encodeURIComponent(deleteStory.summary)}`, {
+                                        await fetch(`https://ai-devcrew-back.onrender.com/user-stories/${encodeURIComponent(deleteStory.id)}`, {
                                             method: "DELETE",
                                         });
-                                        setStories(stories => stories.filter(s => s.summary !== deleteStory.summary));
+                                        setStories(stories => stories.filter(s => s.id !== deleteStory.id));
                                         setDeleteStory(null);
                                     } catch {
                                         alert("Error deleting story");
