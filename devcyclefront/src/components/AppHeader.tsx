@@ -43,7 +43,7 @@ const AppHeader: React.FC<AppHeaderProps> = ({
             boxShadow: "none"
           }}
         >
-          {theme === "dark" ? "🌙" : "🌞"}
+          {theme === "dark" ? "🌞" : "🌙"}
         </button>
       </div>
       <SideDrawer open={drawerOpen} onClose={() => setDrawerOpen(false)} />

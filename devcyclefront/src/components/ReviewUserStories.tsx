@@ -12,7 +12,6 @@ interface UserStory {
     project: string;
     summary: string;
     description: string;
-    criterios_de_aceptacion: string[];
 }
 
 const ReviewUserStories: React.FC = () => {
@@ -24,16 +23,18 @@ const ReviewUserStories: React.FC = () => {
     const [deleteStory, setDeleteStory] = useState<UserStory | null>(null);
     const [deleting, setDeleting] = useState(false);
     const [menuAnchor, setMenuAnchor] = useState<DOMRect | null>(null);
-
+    const [successMessage, setSuccessMessage] = useState<string | null>(null);
+    const [sendingToJira, setSendingToJira] = useState<{ [key: string]: boolean }>({});
+    
     // States to manage review functionality
     const [reviewOutput, setReviewOutput] = useState<{
         [key: string]: {
+            story: string;
             validation?: string;
             issues?: string[];
             suggestions?: string[];
             acceptance_criteria_check?: string;
             qa_testability?: string;
-            error?: string;
         }
     }>({});
     const [reviewLoading, setReviewLoading] = useState<{ [key: string]: boolean }>({});
@@ -52,17 +53,11 @@ const ReviewUserStories: React.FC = () => {
             try {
                 setLoading(true);
                 setError(null);
-                const response = await fetch("https://ai-devcrew-back.onrender.com/get-all-stories?board_name=Mi%20proyecto%20de%20scrum");
+                const response = await fetch("https://ai-devcrew-back.onrender.com/get-all-stories");
                 if (!response.ok) throw new Error("Failed to fetch user stories");
                 const data = await response.json();
 
-                // Delete this line when using real data
-                const storiesWithProject = (data || []).map((story: any) => ({
-                    ...story,
-                    project: "Mi proyecto de scrum"
-                }));
-
-                setStories(storiesWithProject || []);
+                setStories(data || []);
             } catch (err: any) {
                 setError(err.message || "Error loading user stories");
             } finally {
@@ -97,6 +92,7 @@ const ReviewUserStories: React.FC = () => {
             setReviewOutput(prev => ({
                 ...prev,
                 [key]: {
+                    story: data[0].story,
                     validation: data[0].validation,
                     issues: data[0].issues,
                     suggestions: data[0].suggestions,
@@ -121,6 +117,44 @@ const ReviewUserStories: React.FC = () => {
                     Here you can view and manage all your created user stories, grouped by project. Click the project name to expand its stories, and use the menu on the right of each story for more options.
                 </p>
             </div>
+            {successMessage && (
+                <div
+                    style={{
+                        position: "fixed",
+                        top: 24,
+                        right: 24,
+                        zIndex: 2000,
+                        background: "#22c55e",
+                        color: "#fff",
+                        padding: "16px 32px",
+                        borderRadius: 12,
+                        boxShadow: "0 4px 24px 0 rgba(34,197,94,0.13)",
+                        fontWeight: 600,
+                        fontSize: "1.1rem",
+                        display: "flex",
+                        alignItems: "center",
+                        gap: 12,
+                        animation: "fadeInSuccess 0.3s"
+                    }}
+                >
+                    <span style={{ fontSize: 22 }}>✅</span>
+                    {successMessage}
+                    <button
+                        style={{
+                            marginLeft: 18,
+                            background: "none",
+                            border: "none",
+                            color: "#fff",
+                            fontSize: 18,
+                            cursor: "pointer"
+                        }}
+                        onClick={() => setSuccessMessage(null)}
+                        aria-label="Close"
+                    >
+                        ×
+                    </button>
+                </div>
+            )}
             <main className="user-stories-main">
                 <div className="user-stories-list-card">
                     {loading && <div className="user-stories-loading">Loading...</div>}
@@ -226,6 +260,35 @@ const ReviewUserStories: React.FC = () => {
                                                                                 <li>No suggestions.</li>
                                                                             )}
                                                                         </ul>
+                                                                        <button
+                                                                            className="review-modal-btn"
+                                                                            style={{ marginTop: 18 }}
+                                                                            onClick={async () => {
+                                                                                setSendingToJira(prev => ({ ...prev, [key]: true }));
+                                                                                try {
+                                                                                    await fetch("https://ai-devcrew-back.onrender.com/comment-review-results", {
+                                                                                        method: "POST",
+                                                                                        headers: {
+                                                                                            "Content-Type": "application/json",
+                                                                                        },
+                                                                                        body: JSON.stringify([reviewOutput[key]]),
+                                                                                    });
+                                                                                    setSuccessMessage("Review sent to Jira successfully!");
+                                                                                    setTimeout(() => setSuccessMessage(null), 3500);
+                                                                                } catch {
+                                                                                    alert("Error sending review to Jira.");
+                                                                                }
+                                                                            }}
+                                                                        >
+                                                                            {sendingToJira[key] ? (
+                                                                                <span style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 8 }}>
+                                                                                    <Spinner size={18} />
+                                                                                    Sending...
+                                                                                </span>
+                                                                            ) : (
+                                                                                "Send review to Jira"
+                                                                            )}
+                                                                        </button>
                                                                     </>
                                                                 )}
                                                             </div>
@@ -251,18 +314,6 @@ const ReviewUserStories: React.FC = () => {
                         <div className="review-modal-description">
                             {viewStory.description}
                         </div>
-                        <div className="review-modal-acceptance">
-                            <div className="review-modal-acceptance-title">Acceptance Criteria:</div>
-                            <ul className="review-modal-acceptance-list">
-                                {viewStory.criterios_de_aceptacion && viewStory.criterios_de_aceptacion.length > 0 ? (
-                                    viewStory.criterios_de_aceptacion.map((criteria, idx) => (
-                                        <li key={idx}>{criteria}</li>
-                                    ))
-                                ) : (
-                                    <li>No acceptance criteria.</li>
-                                )}
-                            </ul>
-                        </div>
                         <button className="review-modal-btn" onClick={() => setViewStory(null)}>
                             Close
                         </button>
@@ -287,7 +338,7 @@ const ReviewUserStories: React.FC = () => {
                                 onClick={async () => {
                                     setDeleting(true);
                                     try {
-                                        await fetch(`https://ai-devcrew-back.onrender.com/user-stories/${encodeURIComponent(deleteStory.id)}`, {
+                                        await fetch('https://ai-devcrew-back.onrender.com/delete-issue?issue_key=' + deleteStory.id, {
                                             method: "DELETE",
                                         });
                                         setStories(stories => stories.filter(s => s.id !== deleteStory.id));
