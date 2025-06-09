@@ -38,7 +38,7 @@ const SideDrawer: React.FC<SideDrawerProps> = ({ open, onClose }) => (
         </li>
         <hr className="side-drawer-separator" />
         <li>
-          <Link to="/configuration" onClick={onClose}>Configuration</Link>
+          <Link to="/settings" onClick={onClose}>Configuration</Link>
         </li>
       </ul>
     </nav>

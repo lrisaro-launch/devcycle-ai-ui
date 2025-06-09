@@ -48,9 +48,6 @@ const HomePage: React.FC = () => (
           <Link to="/upload" className="homepage-btn homepage-btn-primary">
             Upload your document
           </Link>
-          <a href="#areas" className="homepage-btn homepage-btn-secondary">
-            See how it works &rarr;
-          </a>
         </div>
         <br />
       </div>

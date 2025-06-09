@@ -1,0 +1,73 @@
+.settings-main {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    width: 100%;
+    min-height: 60vh;
+}
+
+.settings-list-card {
+    background: var(--bg-card);
+    border-radius: 28px;
+    box-shadow: 0 2px 24px 0 rgba(0, 0, 0, 0.13);
+    padding: 40px 32px 32px 32px;
+    width: 70%;
+    max-width: 98vw;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.settings-list-card form {
+    width: 96%;
+}
+
+.settings-label {
+    font-weight: 600;
+    color: var(--text-main, #fff);
+    margin-bottom: 6px;
+    font-size: 1.08rem;
+    font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+}
+
+.settings-textarea {
+    width: 100%;
+    margin-bottom: 18px;
+    border-radius: 12px;
+    border: 1.5px solid #b0b8d1;
+    padding: 16px;
+    font-size: 1.08rem;
+    background: var(--bg-main, #181f36);
+    color: var(--text-main, #fff);
+    resize: vertical;
+    font-family: inherit;
+    box-sizing: border-box;
+    transition: border 0.18s;
+}
+
+.settings-textarea:focus {
+    outline: 2px solid #3b82f6;
+    border-color: #3b82f6;
+}
+
+.settings-saved-msg {
+    margin-left: 18px;
+    color: #22c55e;
+    font-weight: 600;
+    font-size: 1.08rem;
+}
+
+/* Light theme overrides */
+body[data-theme="light"] .settings-list-card {
+    background: #f8fafc;
+}
+
+body[data-theme="light"] .settings-label {
+    color: var(--text-main, #232b3e);
+}
+
+body[data-theme="light"] .settings-textarea {
+    background: #e0e7ef;
+    color: var(--text-main, #232b3e);
+}
