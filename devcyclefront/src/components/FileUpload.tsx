@@ -189,11 +189,11 @@ const FileUpload: React.FC = () => {
                   <div className="file-upload-ia-logo-label">OpenAI</div>
                 </div>
                 <div
-                  className={`file-upload-ia-logo-option${selectedIA === "Deepseek" ? " selected" : ""}`}
-                  onClick={() => !isProcessing && setSelectedIA("Deepseek")}
+                  className={`file-upload-ia-logo-option${selectedIA === "deepseek/deepseek-chat" ? " selected" : ""}`}
+                  onClick={() => !isProcessing && setSelectedIA("deepseek/deepseek-chat")}
                   tabIndex={0}
                   role="button"
-                  aria-pressed={selectedIA === "Deepseek"}
+                  aria-pressed={selectedIA === "deepseek/deepseek-chat"}
                 >
                   <img src={DeepseekLogo} alt="Deepseek Logo" className="file-upload-ia-logo-img" />
                   <div className="file-upload-ia-logo-label">Deepseek</div>
