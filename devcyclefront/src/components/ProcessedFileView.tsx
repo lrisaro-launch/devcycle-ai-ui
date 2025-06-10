@@ -15,38 +15,30 @@ const ProcessedFileView: React.FC = () => {
   const [currentStory, setCurrentStory] = useState<number>(0);
   const [selectedRepo, setSelectedRepo] = useState<string>("Jira");
 
-  function wait(ms: number) {
-    return new Promise(resolve => setTimeout(resolve, ms));
-  }
-  1
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsCreating(true);
+    try {
+      if (selectedRepo == "Jira") {
+        const response = await fetch("https://ai-devcrew-back.onrender.com/publish-to-jira", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(result),
+        });
 
-    await wait(1500);
-    setIsCreating(false);
-    setShowSuccess(true);
-    // try {
-    //   if (selectedRepo == "Jira") {        
-    //     const response = await fetch("https://ai-devcrew-back.onrender.com/publish-to-jira", {
-    //       method: "POST",
-    //       headers: {
-    //         "Content-Type": "application/json", 
-    //       },
-    //       body: JSON.stringify( result ), 
-    //     });
+        if (!response.ok) {
+          throw new Error("Failed to process the document.");
+        }
+      }
 
-    //     if (!response.ok) {
-    //       throw new Error("Failed to process the document.");
-    //     }
-    //   }
-
-    //   setIsCreating(false);
-    //   setShowSuccess(true);
-    // } catch (err: any) {
-    //   setIsCreating(false);
-    //   alert("An error occurred while processing the document.");
-    // }
+      setIsCreating(false);
+      setShowSuccess(true);
+    } catch (err: any) {
+      setIsCreating(false);
+      alert("An error occurred while processing the document.");
+    }
   }
 
   return (
