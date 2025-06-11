@@ -19,6 +19,12 @@
     gap: 24px;
 }
 
+.settings-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
 .settings-list-card form {
     width: 96%;
 }
