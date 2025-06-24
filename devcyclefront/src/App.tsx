@@ -5,6 +5,7 @@ import { ProcessedFileProvider } from "./context/ProcessedFileContext";
 import HomePage from "./components/HomePage";
 import ReviewUserStories from "./components/ReviewUserStories";
 import SettingsPage from "./components/SettingsPage";
+import ProcessUserStories from "./components/ProcessUserStories";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
           <Route path="/processed" element={<ProcessedFileView />} />
           <Route path="/review" element={<ReviewUserStories />} /> 
           <Route path="/settings" element={<SettingsPage />} />
+          <Route path="/processUserStories" element={<ProcessUserStories />} />
         </Routes>
       </Router>
     </ProcessedFileProvider>

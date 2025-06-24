@@ -273,6 +273,7 @@ const ReviewUserStories: React.FC = () => {
                                                                                         },
                                                                                         body: JSON.stringify([reviewOutput[key]]),
                                                                                     });
+                                                                                    setSendingToJira(prev => ({ ...prev, [key]: false }));
                                                                                     setSuccessMessage("Review sent to Jira successfully!");
                                                                                     setTimeout(() => setSuccessMessage(null), 3500);
                                                                                 } catch {

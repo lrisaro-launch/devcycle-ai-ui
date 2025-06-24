@@ -166,7 +166,7 @@
 }
 
 .review-modal {
-  background: linear-gradient(135deg, #f8fafc 60%, #e0e7ef 100%);
+  background: radial-gradient(#1e2746 0%, #101522 100%);
   border-radius: 20px;
   padding: 2.2rem 2.5rem 2rem 2.5rem;
   box-shadow: 0 8px 40px 0 rgba(59,130,246,0.18), 0 1.5px 8px 0 rgba(59,130,246,0.10);
@@ -185,13 +185,13 @@
 .review-modal-title {
   font-size: 1.35rem;
   font-weight: 700;
-  color: #232b3e;
+  color: #fff;
   margin-bottom: 1.1rem;
   font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
 }
 
 .review-modal-description {
-  color: #334155;
+  color: #fff;
   font-size: 1.08rem;
   margin-bottom: 1.7rem;
   font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
