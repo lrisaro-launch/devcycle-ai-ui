@@ -158,7 +158,7 @@ const SettingsPage: React.FC = () => {
                                     placeholder="Enter your custom prompt here..."
                                 />
                             </Collapsible>
-                            <Collapsible
+                            {/* <Collapsible
                                 title={
                                     <span style={{ display: "flex", alignItems: "center", gap: 10 }}>
                                         Prompt to upload the review to the platform
@@ -175,7 +175,7 @@ const SettingsPage: React.FC = () => {
                                     rows={12}
                                     placeholder="Enter your custom prompt here..."
                                 />
-                            </Collapsible>
+                            </Collapsible> */}
                         </ul>
                     </Collapsible>
                     <button

@@ -325,7 +325,7 @@ const ReviewUserStories: React.FC = () => {
             {deleteStory && (
                 <div className="review-modal-bg">
                     <div className="review-modal">
-                        <div className="review-modal-title" style={{ color: "#232b3e" }}>
+                        <div className="review-modal-title" style={{ color: "white" }}>
                             Confirm delete
                         </div>
                         <div className="review-modal-description">

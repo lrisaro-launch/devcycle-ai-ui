@@ -61,7 +61,7 @@ const ProcessedFileView: React.FC = () => {
               disabled={currentStory === 0}
               aria-label="Previous story"
             >
-              &#8592;
+              <span className="pfv-carousel-arrow-icon">&#8249;</span>
             </button>
             {historias && Array.isArray(historias) && historias.length > 0 ? (
               <div className="pfv-historia-card pfv-historia-card-full">
@@ -76,7 +76,7 @@ const ProcessedFileView: React.FC = () => {
                   Acceptance criteria:
                 </span>
                 <span className="pfv-historia">
-                  {historias[currentStory].criterios_de_aceptacion}
+                  {historias[currentStory].acceptance_criteria}
                 </span>
               </div>
             ) : (
@@ -91,7 +91,7 @@ const ProcessedFileView: React.FC = () => {
               disabled={!historias || currentStory === (historias?.length ?? 1) - 1}
               aria-label="Next story"
             >
-              &#8594;
+              <span className="pfv-carousel-arrow-icon">&#8250;</span>
             </button>
           </div>
           {historias && historias.length > 0 && (
