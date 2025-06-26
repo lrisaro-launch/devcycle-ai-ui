@@ -30,11 +30,6 @@
     letter-spacing: 0.01em;
 }
 
-body[data-theme="light"] .ic-section-desc
-{
-    color: #213547;
-}
-
 /* --- Checkbox, Radio, Toggle Styles --- */
 .ic-checkbox-label,
 .ic-radio-label {
@@ -51,8 +46,8 @@ body[data-theme="light"] .ic-section-desc
 }
 
 .ic-checkbox-label:hover,
-.ic-radio-label:hover {
-    background: #f1f5f9;
+.ic-radio-label:hover{
+    background: #5b5c5e;
 }
 
 .ic-toggle-label {
@@ -80,7 +75,6 @@ body[data-theme="light"] .ic-section-desc
     flex-direction: column;
     gap: 18px;
     margin-bottom: 12px;
-    max-width: 500px;
 }
 
 .ic-advanced-fields label {
@@ -93,14 +87,12 @@ body[data-theme="light"] .ic-section-desc
 }
 
 .ic-advanced-fields input,
-.ic-advanced-fields select {
+.ic-advanced-fields {
     flex: 1 1 300px;
     min-width: 220px;
-    max-width: 340px;
     margin: 0;
     padding: 6px 10px;
     border-radius: 5px;
-    border: 1px solid #cbd5e1;
     font-size: 1rem;
     box-sizing: border-box;
     align-self: flex-end;
@@ -119,4 +111,14 @@ body[data-theme="light"] .ic-section-desc
     font-size: 1rem;
     box-sizing: border-box;
     background: #fff;
+}
+
+body[data-theme="light"] .ic-section-desc
+{
+    color: #213547;
+}
+
+body[data-theme="light"] 
+  .ic-radio-label:hover {
+    background: #e2e8f0;
 }

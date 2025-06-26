@@ -369,7 +369,7 @@ const InfrastructureConfiguration: React.FC = () => {
                         <div className="ic-section-desc">Customize advanced project details.</div>
                         <div className="ic-advanced-fields">
                             <label>
-                                Environment variables
+                                Environment variables:
                                 <input
                                     type="text"
                                     value={envVars}
@@ -380,7 +380,7 @@ const InfrastructureConfiguration: React.FC = () => {
                                 />
                             </label>
                             <label>
-                                Base paths
+                                Base paths:
                                 <input
                                     type="text"
                                     value={basePath}
@@ -391,7 +391,7 @@ const InfrastructureConfiguration: React.FC = () => {
                                 />
                             </label>
                             <label>
-                                Project name
+                                Project name:
                                 <input
                                     type="text"
                                     value={projectName}
@@ -402,7 +402,7 @@ const InfrastructureConfiguration: React.FC = () => {
                                 />
                             </label>
                             <label>
-                                Deployment region
+                                Deployment region:
                                 <select
                                     value={region}
                                     onChange={e => setRegion(e.target.value)}
