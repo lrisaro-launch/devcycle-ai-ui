@@ -6,6 +6,7 @@ import HomePage from "./components/HomePage";
 import ReviewUserStories from "./components/ReviewUserStories";
 import SettingsPage from "./components/SettingsPage";
 import ProcessUserStories from "./components/ProcessUserStories";
+import InfrastructureConfiguration from "./components/InfrastructureConfiguration";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
           <Route path="/review" element={<ReviewUserStories />} /> 
           <Route path="/settings" element={<SettingsPage />} />
           <Route path="/processUserStories" element={<ProcessUserStories />} />
+          <Route path="/infrastructure" element={<InfrastructureConfiguration />} />
         </Routes>
       </Router>
     </ProcessedFileProvider>

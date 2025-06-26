@@ -49,7 +49,11 @@ const SideDrawer: React.FC<SideDrawerProps> = ({ open, onClose }) => {
             </li>
             <hr className="side-drawer-separator" />
             <li>
-              <Link to="/settings" onClick={onClose}>Configuration</Link>
+              <Link to="/infrastructure" onClick={onClose}>Infrastructure Configuration</Link>
+            </li>
+            <hr className="side-drawer-separator" />
+            <li>
+              <Link to="/settings" onClick={onClose}>System Configuration</Link>
             </li>
           </ul>
           {/* Resources submenu */}
