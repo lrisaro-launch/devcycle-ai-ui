@@ -83,9 +83,9 @@ const ProcessUserStories: React.FC = () => {
         <div className="pfv-bg">
             <AppHeader />
             <div className="pfv-title-section">
-                <h1 className="pfv-title">Process user stories</h1>
+                <h1 className="pfv-title">Generate code</h1>
                 <p className="pfv-description">
-                    Select the user stories you want to process. Expand each project to view and choose individual stories using the checkbox on the right.
+                    Select the user stories you want to generate code for. Expand each project to view and choose individual stories using the checkbox on the right.
                 </p>
             </div>
             <main className="user-stories-main">
