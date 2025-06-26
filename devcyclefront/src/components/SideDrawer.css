@@ -11,13 +11,11 @@
 .side-drawer {
   position: fixed;
   top: 0;
-  left: -320px; 
-  width: 300px;  
+  left: -380px;  
   height: 100vh;
   background: #181f36;
   box-shadow: 2px 0 16px 0 rgba(0,0,0,0.18);
   z-index: 1202;
-  padding: 64px 0 0 0;
   transition: left 0.25s cubic-bezier(.4,0,.2,1);
   display: flex;
   flex-direction: column;
@@ -28,26 +26,32 @@
 }
 
 /* Close button */
-.side-drawer-close {
-  background: none;
-  border: none;
-  color: #fff;
-  font-size: 2rem;
-  position: absolute;
-  top: 18px;
-  right: 18px;   
-  left: auto;    
-  cursor: pointer;
-  width: 44px;
-  height: 44px;
+.side-drawer-header {
   display: flex;
-  flex-direction: column;
   align-items: center;
-  justify-content: center;
-  border-radius: 8px;
-  transition: background 0.18s;
-  padding: 0;
+  gap: 3px;
+  padding: 18px 24px 10px 24px;
+  border-bottom: 1px solid #232b3a;
+  font-family: 'Poppins', 'Inter', Arial, sans-serif;
 }
+
+.header-logo {
+  width: auto;
+  display: block;
+  margin-right: 0px;
+}
+
+.side-drawer-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #fff;
+  letter-spacing: 0.01em;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  height: 32px;
+}
+
 .side-drawer-close:hover,
 .side-drawer-close:focus {
   background: #232b3e;
@@ -255,4 +259,18 @@
 .drawer-menu::-webkit-scrollbar-thumb {
   background: #232b3e;
   border-radius: 3px;
+}
+
+.app-header h1 {
+  margin: 0;
+  font-size: 1.3rem;
+  font-weight: 400;
+  letter-spacing: 0.5px;
+  line-height: 1;
+}
+
+.app-header p {
+  margin: 0;
+  font-size: 1rem;
+  opacity: 0.85;
 }

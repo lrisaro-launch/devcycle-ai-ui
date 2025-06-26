@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import "./SideDrawer.css";
+import logo from "../images/logo.png";
 
 interface SideDrawerProps {
   open: boolean;
@@ -29,11 +30,15 @@ const SideDrawer: React.FC<SideDrawerProps> = ({ open, onClose }) => {
       )}
 
       <nav className={`side-drawer${open ? " open" : ""}`}>
-        <button className="side-drawer-close" onClick={handleClose} aria-label="Close menu">
-          <span />
-          <span />
-          <span />
-        </button>
+        <div className="side-drawer-header">
+          <button className="side-menu-hamburger" onClick={handleClose} aria-label="Close menu">
+            <span />
+            <span />
+            <span />
+          </button>
+          <img src={logo} alt="Logo" className="header-logo" />
+          <h1>Launch DevCycle AI</h1>
+        </div>
         <div className="drawer-content">
           {/* Main menu */}
           <ul className={`drawer-menu${showResources ? " hide" : ""}`}>
