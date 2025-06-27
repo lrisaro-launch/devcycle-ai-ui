@@ -207,26 +207,22 @@ const InfrastructureConfiguration: React.FC = () => {
     const handleProcessFile = async () => {
         try {
             setProcessing(true);
-            const response = await fetch("/api/process-config", {
+            const response = await fetch("https://ai-devcrew-back.onrender.com/download-terraform", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(form),
             });
+
             if (!response.ok) throw new Error("Error processing configuration");
 
-            const blob = await response.blob();
-
-            const disposition = response.headers.get("Content-Disposition");
-            let filename = "processed-config.zip";
-            if (disposition && disposition.indexOf("filename=") !== -1) {
-                filename = disposition.split("filename=")[1].replace(/"/g, "");
-            }
-
-            // Create a link to download the file
+            const data = await response.json();
+            const tfContent = JSON.stringify(data, null, 2);
+            const blob = new Blob([tfContent], { type: "text/plain" });
             const url = window.URL.createObjectURL(blob);
             const a = document.createElement("a");
+
             a.href = url;
-            a.download = filename;
+            a.download = "Infrastructure_Configuration.tf";
             document.body.appendChild(a);
             a.click();
             a.remove();
