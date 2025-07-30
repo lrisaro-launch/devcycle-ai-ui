@@ -12,6 +12,7 @@ interface UserStory {
     project: string;
     summary: string;
     description: string;
+    ticket_updated: string;
 }
 
 const ReviewUserStories: React.FC = () => {
@@ -25,7 +26,7 @@ const ReviewUserStories: React.FC = () => {
     const [menuAnchor, setMenuAnchor] = useState<DOMRect | null>(null);
     const [successMessage, setSuccessMessage] = useState<string | null>(null);
     const [sendingToJira, setSendingToJira] = useState<{ [key: string]: boolean }>({});
-    
+
     // States to manage review functionality
     const [reviewOutput, setReviewOutput] = useState<{
         [key: string]: {
@@ -56,7 +57,7 @@ const ReviewUserStories: React.FC = () => {
                 const response = await fetch("https://ai-devcrew-back.onrender.com/get-all-stories");
                 if (!response.ok) throw new Error("Failed to fetch user stories");
                 const data = await response.json();
-
+                console.log("Fetched user stories:", data);
                 setStories(data || []);
             } catch (err: any) {
                 setError(err.message || "Error loading user stories");
@@ -89,6 +90,7 @@ const ReviewUserStories: React.FC = () => {
 
             if (!response.ok) throw new Error("Failed to fetch review output");
             const data = await response.json();
+
             setReviewOutput(prev => ({
                 ...prev,
                 [key]: {
@@ -183,6 +185,19 @@ const ReviewUserStories: React.FC = () => {
                                                         title={
                                                             <span style={{ display: "flex", alignItems: "center", gap: 10 }}>
                                                                 {story.summary}
+                                                                {story.ticket_updated === "true" && (
+                                                                    <span
+                                                                        style={{
+                                                                            color: "#f59e0b",
+                                                                            fontSize: "1.2em",
+                                                                            fontWeight: "bold",
+                                                                            marginLeft: "4px"
+                                                                        }}
+                                                                        title="User Story has been updated manually"
+                                                                    >
+                                                                        ⚠️
+                                                                    </span>
+                                                                )}
                                                                 {reviewLoading[key] && (
                                                                     <span style={{ marginLeft: 6 }}>
                                                                         <Spinner size={18} />

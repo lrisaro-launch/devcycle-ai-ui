@@ -7,8 +7,6 @@ import "./SettingsPage.css";
 const PROMPTS = "Prompts";
 const PROMPT_PROCESS_DOCUMENTS = "Prompt_process_documents";
 const PROMPT_REVIEW_USER_STORIES = "Prompt_review_user_stories";
-const PROMPT_UPLOAD_REVIEW = "Prompt_upload_review";
-
 const promptsDic: Record<string, string> = {
     REQUIREMENTS_ANALYSIS_PROMPT: "",
     QA_REVIEW_PROMPT: ""
@@ -17,7 +15,6 @@ const promptsDic: Record<string, string> = {
 const SettingsPage: React.FC = () => {
     const [openSetting, setOpenSetting] = useState<string | null>(null);
     const [openCollapsible, setOpenCollapsible] = useState<string | null>(null);
-    const [uploadReviewPrompt, setUploadReviewPrompt] = useState("");
     const [successMessage, setSuccessMessage] = useState<string | null>(null);
 
     useEffect(() => {
@@ -31,11 +28,6 @@ const SettingsPage: React.FC = () => {
             if (!reviewPromptResponse.ok) throw new Error("Failed to fetch the review prompt");
             const reviewPromptData = await reviewPromptResponse.json();
             promptsDic.QA_REVIEW_PROMPT = reviewPromptData || "";
-
-            // const uploadReviewPromptResponse = await fetch("https://ai-devcrew-back.onrender.com/get-prompt?prompt_name=QA_REVIEW_PROMPT");
-            // if (!uploadReviewPromptResponse.ok) throw new Error("Failed to fetch the upload review prompt");
-            // const uploadReviewPromptData = await uploadReviewPromptResponse.json();
-            // setUploadReviewPrompt(uploadReviewPromptData || "");
         };
         getPrompts();
     }, []);
@@ -158,24 +150,6 @@ const SettingsPage: React.FC = () => {
                                     placeholder="Enter your custom prompt here..."
                                 />
                             </Collapsible>
-                            {/* <Collapsible
-                                title={
-                                    <span style={{ display: "flex", alignItems: "center", gap: 10 }}>
-                                        Prompt to upload the review to the platform
-                                    </span>
-                                }
-                                open={openCollapsible === PROMPT_UPLOAD_REVIEW}
-                                onToggle={() => setOpenCollapsible(openCollapsible === PROMPT_UPLOAD_REVIEW ? null : PROMPT_UPLOAD_REVIEW)}
-                            >
-                                <textarea
-                                    id={PROMPT_UPLOAD_REVIEW}
-                                    className="settings-textarea"
-                                    value={uploadReviewPrompt}
-                                    onChange={e => setUploadReviewPrompt(e.target.value)}
-                                    rows={12}
-                                    placeholder="Enter your custom prompt here..."
-                                />
-                            </Collapsible> */}
                         </ul>
                     </Collapsible>
                     <button
